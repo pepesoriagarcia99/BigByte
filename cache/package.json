@@ -1,0 +1,25 @@
+{
+  "name": "@hexagonal/cache",
+  "version": "0.1.0",
+  "author": "Jose Eduardo Soria Garcia <pepesoriagarcia99@gmail.com>",
+  "license": "ISC",
+  "private": false,
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "npm:link": "npm run build && npm link",
+    "npm:publish": "npm run build && npm publish --access public",
+    "yalc:publish": "npm run build && npx yalc publish --push"
+  },
+  "dependencies": {
+    "reflect-metadata": "~0.2.2",
+    "tslib": "~2.3",
+    "uuid": "~11.1",
+    "zone.js": "~0.14"
+  },
+  "devDependencies": {
+    "@types/node": "~22",
+    "concurrently": "~8",
+    "typescript": "~5"
+  }
+}

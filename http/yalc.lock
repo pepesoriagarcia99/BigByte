@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@hexagonal/utils": {
+      "signature": "bdb46b6a510419841481201200902f5a",
+      "file": true
+    }
+  }
+}
