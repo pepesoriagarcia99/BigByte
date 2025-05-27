@@ -6,11 +6,11 @@ El repositorio **BigByte** forma parte del proyecto **Alarife**, una iniciativa 
 
 Alarife es una propuesta que a lo largo de mis años desarrollando en TypeScript y Node, encontrandome con las misma problematicas me hizo ver la necesidad de desarrollar un framework para para este stack.
 
-# Paquetes
+## Paquetes
 
-## Cli
+### Cli
 
-## Core
+### Core
 
 
 nombre de los paquetes

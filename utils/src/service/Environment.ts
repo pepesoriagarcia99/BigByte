@@ -11,5 +11,11 @@ export default {
     },
     has(key: string) {
         return Boolean(process.env[key]);
+    },
+    keys() {
+        return Object.keys(process.env);
+    },
+    values() {
+        return Object.values(process.env);
     }
 }
