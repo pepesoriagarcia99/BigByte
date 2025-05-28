@@ -6,7 +6,6 @@ import { ARGV_FLAG_DOCTOR, ARGV_FLAG_WATCH, BANNER_MODE } from ".";
  * ISSUE: integrar argv en env para que puedan ser usados luego en value store
  */
 export default {
-
     environment: {
         DEFAULT_VALUES: {
             [NODE_ENV]: DEVELOPMENT,

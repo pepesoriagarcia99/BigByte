@@ -6,13 +6,7 @@ import { DuplicatePropertyError } from "../exception";
 import { envFilePath } from "./Arguments";
 import { DEFAULT_ENV_VALUES, LIBRARY_NAME } from "../constant";
 import { addons } from "./Addons";
-
-
-interface DefaultEnvValue {
-  key: string;
-  value: string;
-  origin: string;
-}
+import { DefaultEnvValue } from "../model/DefaultEnvValue";
 
 const log = new Logger('Environment', LIBRARY_NAME);
 export let envFileData: Map<string, string> = new Map(); // variables de entorno del archivo de entorno
