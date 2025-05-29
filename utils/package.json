@@ -50,6 +50,11 @@
       "import": "./lib/service/Logger.js",
       "require": "./lib/service/Logger.js",
       "types": "./lib/service/Logger.d.ts"
+    },
+    "./integration": {
+      "import": "./lib/model/integration/index.js",
+      "require": "./lib/model/integration/index.js",
+      "types": "./lib/model/integration/index.d.js"
     }
   },
   "typesVersions": {
@@ -77,6 +82,9 @@
       ],
       "logger": [
         "./lib/service/Logger.d.ts"
+      ],
+      "integration": [
+        "./lib/model/integration/index.d.js"
       ]
     }
   },
