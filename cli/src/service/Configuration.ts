@@ -1,5 +1,5 @@
 import Logger from "@hexagonal/utils/logger";
-import { Command, Configuration, Environment } from "@hexagonal/utils/lib/model/integration";
+import { Command, Configuration, Environment, Flag } from "@hexagonal/utils/lib/model/integration";
 
 import { LIBRARY_NAME } from "../constant";
 import { addons } from "./Addon";
@@ -23,18 +23,19 @@ const processEnvironment = ({ DEFAULT_VALUES }: Environment) => {
     }
 }
 
-const porcessCommand = (inputCommands: Command[]) => {
+const processCommand = (inputCommands: Command[]) => {
     inputCommands.forEach((command) => {
         const existingCommand = commands.find(c => c.name === command.name);
         if (existingCommand) {
-            // Merge flags if the command already exists
-            // command.flags?.forEach((flag) => {
-            //     if (!existingCommand.flags?.some(f => f.name === flag.name)) {
-            //         existingCommand.flags = [...(existingCommand.flags || []), flag];
-            //     } else {
-            //         log.warn(`Flag ${flag.name} already exists in command ${command.name}. Skipping duplicate.`);
-            //     }
-            // });
+            existingCommand.flags?.forEach((flag: Flag) => {
+                const existingFlag = existingCommand.flags?.find((f: Flag) => f.name === flag.name);
+
+                if(existingFlag) {
+                    // ver que parametros se actualizan o no                    
+                } else {
+                    existingCommand.flags?.push(flag);
+                }
+            });
         } else {
             commands.push(command);
         }
@@ -47,7 +48,7 @@ const processConfiguration = (configuration: Configuration) => {
     }
 
     if (configuration.commands) {
-        porcessCommand(configuration.commands);
+        processCommand(configuration.commands);
     }
 }
 
