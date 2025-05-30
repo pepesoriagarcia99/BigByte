@@ -1,12 +1,14 @@
 
 import path from "node:path";
+import { existsSync } from "node:fs";
+
 import Logger from "@hexagonal/utils/logger";
 import { ROOT_PATH, LIBRARY_ORGANIZATION_NAME } from "@hexagonal/utils/constant";
-import { INTEGRATION_CONFIGURATION_PATH, LIBRARY_NAME } from "../constant";
 
+import { INTEGRATION_CONFIGURATION_PATH, LIBRARY_NAME } from "../constant";
 import { getInstalledVersion, packageJson } from "./Package";
 import { MissingConfigurationError } from "../exception";
-import { existsSync } from "node:fs";
+
 import { Addon } from "../model/Addon";
 import { Configuration } from "@hexagonal/utils/lib/model/integration";
 
@@ -15,7 +17,7 @@ const log = new Logger('AddonService', LIBRARY_NAME);
 
 export let addons: Addon[] = [];
 
-export const readAddons = () => {
+export const readAddons = (): void => {
     if (!packageJson.dependencies) {
         throw new MissingConfigurationError('package.json', 'dependencies')
     }

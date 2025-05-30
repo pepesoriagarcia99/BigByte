@@ -1,4 +1,4 @@
-import { Flag } from "./Arguments";
+import { Flag } from "./Flag";
 import { HelpBase } from "./Help";
 
 interface CommandBase {

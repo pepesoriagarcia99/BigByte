@@ -6,10 +6,16 @@ import Logger from "@hexagonal/utils/logger";
 import { LIBRARY_NAME } from "../constant";
 
 import { buildRootDir, compileTypeScript } from "./TypeScriptCompiler";
-import { searchAddons } from "./Addons";
+import { readAddons } from "./Addon";
 import { relaunch } from "./Launcher";
 import { envFileName, envFilePath } from "./Arguments";
 import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
+
+
+/**
+ * TODO: Meter el watcher en un worker para que no bloquee el hilo principal, (pensarlo bien)
+ * TODO: Mostrar el PID del watcher en el log
+ */
 
 
 const log = new Logger('Watcher', LIBRARY_NAME);
@@ -43,32 +49,32 @@ export const initChangeDetector = () => {
     const relativePath = path.relative(ROOT_PATH, filePath);
     log.debug(`[${new Date().toLocaleTimeString()}] Modification: ${relativePath}`);
 
-    if (filePath.includes('package.json')) {
-      // si hay nuevas dependencias, se vuelven a cargar las addons
-      // y se recargan los valores por defecto de las variables de entorno
-      searchAddons();
+  //   if (filePath.includes('package.json')) {
+  //     // si hay nuevas dependencias, se vuelven a cargar las addons
+  //     // y se recargan los valores por defecto de las variables de entorno
+  //     readAddons();
 
-      readEnvironment();
-      setDefaultEnvironmentValues();
-    }
-    else if (filePath.includes(envFileName)) {
-      // si hay nuevas dependencias, se vuelven a cargar las addons
-      // y se recargan los valores por defecto de las variables de entorno
-      searchAddons();
+  //     readEnvironment();
+  //     setDefaultEnvironmentValues();
+  //   }
+  //   else if (filePath.includes(envFileName)) {
+  //     // si hay nuevas dependencias, se vuelven a cargar las addons
+  //     // y se recargan los valores por defecto de las variables de entorno
+  //     readAddons();
 
-      readEnvironment();
-      setDefaultEnvironmentValues();
-    }
-    else {
-      try {
-        await compileTypeScript(filePath);
-      } catch (error: any) {
-        log.error('Modification error: ', error);
-      }
-    }
+  //     readEnvironment();
+  //     setDefaultEnvironmentValues();
+  //   }
+  //   else {
+  //     try {
+  //       await compileTypeScript(filePath);
+  //     } catch (error: any) {
+  //       log.error('Modification error: ', error);
+  //     }
+  //   }
 
-    relaunch();
-  }
+  //   relaunch();
+  // }
 
   watcherProcess.on('change', refresh);
   watcherProcess.on('add', refresh);

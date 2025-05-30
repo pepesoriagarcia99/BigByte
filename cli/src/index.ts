@@ -1,17 +1,31 @@
 #!/usr/bin/env node
 
-import { ARGV_COMMAND_HELP, ARGV_COMMAND_PACKAGE, ARGV_COMMAND_RUN, ARGV_FLAG_VERSION, ARGV_FLAG_VERSION_SHORT } from "./constant";
+// import { ARGV_COMMAND_HELP, ARGV_COMMAND_PACKAGE, ARGV_COMMAND_RUN, ARGV_FLAG_VERSION, ARGV_FLAG_VERSION_SHORT } from "./constant";
 
-import { readArguments, action } from "./service/Arguments";
+// import { readArguments, action } from "./service/Arguments";
 
-import helpExec from "./command/Help";
-import versionExec from "./command/Version";
-import runExec from "./command/Run";
-import packageExec from "./command/Package";
-import { readAddons } from "./service/Addons";
+// import helpExec from "./command/Help";
+// import versionExec from "./command/Version";
+// import runExec from "./command/Run";
+// import packageExec from "./command/Package";
+import { readAddons } from "./service/Addon"
+import { configure } from "./service/Configuration";
+import { readArguments } from "./service/Arguments";
 
+// import { readEnvironment } from "./service/Environment";
+
+// se leen las addons y se configura el objeto
 readAddons();
+configure();
+
+
+// si hay un flag qeu configura un valor env lo setea a los environments
 readArguments();
+
+// lee los environments y los guarda
+// si el valor ya existe, significa que lo seteo un flag
+// si el valor no existe despues de esto, se añade el valor por defecto
+// readEnvironment();
 
 /**
  * Pensando:

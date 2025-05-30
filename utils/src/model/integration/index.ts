@@ -1,4 +1,4 @@
-export * from './Arguments'
+export * from './Flag'
 export * from './Configuration'
 export * from './Environment'
 export * from './Help'

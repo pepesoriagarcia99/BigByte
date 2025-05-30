@@ -8,10 +8,11 @@ import { compileTypeScript, readTsConfig } from "../service/TypeScriptCompiler";
 import { readEnvironment, setDefaultEnvironmentValues } from "../service/Environment";
 import { launch } from "../service/Launcher";
 import { readTargetPackageJson } from "../service/Package";
-import { doctorServerProcess, initDoctorServer } from "../service/Doctor";
+import { doctorServerProcess, initDoctorServer } from "../service/run/Doctor";
 import { CompilationError, CompilationErrorData } from "../exception/CompilationError";
+import { ARGV_COMMAND_RUN } from "../constant/argv";
 
-const log = new Logger('Run', LIBRARY_NAME);
+const log = new Logger(ARGV_COMMAND_RUN, LIBRARY_NAME);
 
 export default async () => {
     const init = performance.now();
@@ -22,9 +23,9 @@ export default async () => {
 
     readTsConfig();
     readTargetPackageJson();
-    readEnvironment();
+    // readEnvironment();
 
-    setDefaultEnvironmentValues(); // requiere cargar las addons para añadir sus valores por defecto
+    // setDefaultEnvironmentValues(); // requiere cargar las addons para añadir sus valores por defecto
 
     try {
         await compileTypeScript();

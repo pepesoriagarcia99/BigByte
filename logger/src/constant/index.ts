@@ -9,30 +9,11 @@ export const METADATA_LOGGER_DECORATED = 'metadata:logger';
 
 
 /** Environment */
-export const TRACE_LOG_FILE_MODE = 'TRACE_LOG_FILE_MODE';
-export const TRACE_LOG_FILE = 'TRACE_LOG_FILE';
-export const TRACE_LOG_FILE_TIME_INTERVAL = 'TRACE_LOG_FILE_TIME_INTERVAL';
-export const TRACE_LOG_FILE_SIZE_INTERVAL = 'TRACE_LOG_FILE_SIZE_INTERVAL';
+export const ENV_TRACE_LOG_FILE = 'TRACE_LOG_FILE';
+export const ENV_TRACE_LOG_FILE_TIME_INTERVAL = 'TRACE_LOG_FILE_TIME_INTERVAL';
+export const ENV_TRACE_LOG_FILE_SIZE_INTERVAL = 'TRACE_LOG_FILE_SIZE_INTERVAL';
 
-// export const argv = []
-
-// export const env = [
-//     // Configuracion del archivo de trazas
-//     TRACE_LOG_FILE_MODE, // Estado del log, on o off
-
-//     // Ruta del archivo donce volcar los logs
-//     // Ubicacion por defecto, carpeta log del proyecto
-//     TRACE_LOG_FILE,
-
-//     // Intervalos de refresco de los logs, por tiempo o por tamaño
-//     // Valores de intervalo, los usados por wiston
-//     TRACE_LOG_FILE_TIME_INTERVAL,
-//     TRACE_LOG_FILE_SIZE_INTERVAL
-// ]
-
-// /** Environment */
-
-// /** Environment values */
-// export const DEFAULT_ENV_VALUES = {
-//     [TRACE_LOG_FILE_MODE]: 'false'
-// }
+/** Argv */
+export const ARGV_TRACE_LOG_FILE = '--trace-log-file';
+export const ARGV_TRACE_LOG_FILE_TIME_INTERVAL = '--trace-log-file-time-interval';
+export const ARGV_TRACE_LOG_FILE_SIZE_INTERVAL = '--trace-log-file-size-interval';

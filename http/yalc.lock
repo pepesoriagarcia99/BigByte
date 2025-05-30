@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@hexagonal/utils": {
-      "signature": "bdb46b6a510419841481201200902f5a",
+      "signature": "03ce8e6a211c6f801b940109d95da75e",
       "file": true
     }
   }

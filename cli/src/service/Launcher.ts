@@ -12,7 +12,7 @@ import { envFileData } from "./Environment";
 import { displayBanner } from "./Banner";
 import { buildOutDir, buildRootDir } from "./TypeScriptCompiler";
 import { targetAppPath } from "./Arguments";
-import { argvInheritedAddons } from "./Addons";
+import { argvInheritedAddons } from "./Addon";
 import { initIpc } from "./Ipc";
 
 
@@ -27,6 +27,9 @@ export const relaunch = () => {
     launch(true);
 }
 
+/**
+ * TODO: mostrar el PID del proceso lanzado por el logger
+ */
 export const launch = (reload: boolean = false) => {
     let appPath = path.join(ROOT_PATH, buildOutDir);
     const mainPath = targetAppPath.replace('.ts', '.js');
@@ -63,7 +66,6 @@ export const launch = (reload: boolean = false) => {
 
         rootProcess.stderr?.on("data", (data) => {
             console.log("🚀 ~ rootProcess.on ~ data:", data.toString())
-            // console.log("🚀 ~ targetProcess.stderr?.on ~ data:", data.toString())
             //   if (!data.toString().includes("DeprecationWarning")) {
             //     event.reply("server-log", "Error al iniciar el servidor");
             //     event.reply("server-status", "error");
