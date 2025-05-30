@@ -1,4 +1,4 @@
-import { BaseHelp } from "./Help";
+import { HelpBase } from "./Help";
 
 /**
  * * Tipo del flag
@@ -8,8 +8,14 @@ import { BaseHelp } from "./Help";
  */
 export type FlagType = 'switch' | 'value';
 
-export interface Flag extends BaseHelp {
+interface FlagBase {
     name: string; // nombre del flag "--doctor"
-    type: FlagType;
     env?: string; // key del environment donde se replica el valor | si no existe no se replica
 }
+
+/**
+ * Si le pone un tipo significa que esta creando un nuevo flag, no heredandolo
+ */
+export type Flag =
+    | (FlagBase & { type: FlagType } & HelpBase)
+    | (FlagBase & { type?: undefined })   

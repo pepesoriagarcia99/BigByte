@@ -1,8 +1,8 @@
 import { Flag } from "./Arguments";
+import { HelpBase } from "./Help";
 
-export interface Command {
+interface CommandBase {
     name: string; // nombre del comando existente o nuevo
-    path?: string; // ruta del comando, solo para los nuevos
 
     /** 
      * Flags que aplican a cada comando o accion 
@@ -15,3 +15,10 @@ export interface Command {
      */
     flags?: Flag[];
 }
+
+/**
+ * Si se añade path es un nuevo comando por lo tanto hay que dar instrucciones
+ */
+export type Command =
+  | (CommandBase & { path: string } & HelpBase)
+  | (CommandBase & { path?: undefined })   

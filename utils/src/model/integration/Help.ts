@@ -1,8 +1,9 @@
-export interface BaseHelp {
+
+export interface HelpBase {
     description: string;
     detail: string;
 }
 
-export interface Help extends BaseHelp {
-    key: string; // puede ser un command o un flag
-}
+export type Help = ({
+    key: string // puede ser un command o un flag 
+} & HelpBase)
