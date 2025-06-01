@@ -11,7 +11,7 @@ import { METADATA_CORE_COMPONENT_REGISTRY, METADATA_DECORATOR_NAME } from "@hexa
 import { ComponentType, declareDecorator, executeDecorator, MissingComponentRegistryError } from "@hexagonal/utils/registry";
 
 import { DECORATOR_LOGGER_NAME, LIBRARY_NAME, METADATA_LOGGER_DECORATED } from "../constant";
-import { LoggerService } from "../service/LoggerService";
+import { LoggerService } from "../service/Logger";
 
 
 
