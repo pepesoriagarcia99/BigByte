@@ -1,9 +1,12 @@
 import Logger from "@hexagonal/utils/logger";
-import { Command, Configuration, Environment, Flag } from "@hexagonal/utils/lib/model/integration";
+import { Command, Configuration, Environment, Flag, FlagType, HelpBase } from "@hexagonal/utils/lib/model/integration";
 
 import { LIBRARY_NAME } from "../constant";
 import { addons } from "./Addon";
 import cliConfiguration from "../integration/configuration";
+import { ConfigurationError } from "../exception/ConfigurationError";
+import { WriteValueError } from "../model/WriteValueError";
+import { CommandWithHelp, FlagWithHelp } from "../model/Integration";
 
 
 const log = new Logger('Configuration', LIBRARY_NAME);
@@ -23,16 +26,54 @@ const processEnvironment = ({ DEFAULT_VALUES }: Environment) => {
     }
 }
 
+const writeValue = <T>(key: keyof T, currentFlag: T, newFlag: T, defulatValue?: any): void => {
+    const currentValue = currentFlag[key];
+    const newValue = newFlag[key];
+
+    if (!currentValue && newValue) {
+        currentFlag[key] = newValue;
+    }
+    else if (!currentValue && !newValue && defulatValue !== undefined) {
+        currentFlag[key] = defulatValue;
+    }
+    else if (currentValue && newValue && currentValue !== newValue) {
+        throw {
+            key,
+            newValue,
+            currentValue
+        } as WriteValueError;
+    }
+}
+
 const processCommand = (inputCommands: Command[]) => {
     inputCommands.forEach((command) => {
-        const existingCommand = commands.find(c => c.name === command.name);
+        const existingCommand: Command | undefined = commands.find(c => c.name === command.name);
         if (existingCommand) {
-            existingCommand.flags?.forEach((flag: Flag) => {
-                const existingFlag = existingCommand.flags?.find((f: Flag) => f.name === flag.name);
+            try {
+                writeValue<Command>('path', existingCommand, command);
+                writeValue<CommandWithHelp>('description', existingCommand as CommandWithHelp, command as CommandWithHelp);
+                writeValue<CommandWithHelp>('detail', existingCommand as CommandWithHelp, command as CommandWithHelp);
+            } catch (err: any) {
+                throw new ConfigurationError(err.key, `An attempt is being made to overwrite ${err.currentValue} by ${err.newValue} in key ${err.key} at command ${command.name}.`)
+            }
 
-                if(existingFlag) {
-                    // ver que parametros se actualizan o no                    
+            existingCommand.flags?.forEach((flag: Flag) => {
+                const existingFlag: Flag | undefined = existingCommand.flags?.find((f: Flag) => f.name === flag.name);
+
+                if (existingFlag) {
+                    try {
+                        writeValue<Flag>('inherit', existingFlag, flag, true);
+                        writeValue<Flag>('env', existingFlag, flag);
+                        writeValue<Flag>('type', existingFlag, flag);
+
+                        writeValue<FlagWithHelp>('description', existingFlag as FlagWithHelp, flag as FlagWithHelp);
+                        writeValue<FlagWithHelp>('detail', existingFlag as FlagWithHelp, flag as FlagWithHelp);
+                    } catch (err: any) {
+                        throw new ConfigurationError(err.key, `An attempt is being made to overwrite ${err.currentValue} by ${err.newValue} in key ${err.key} at flag ${flag.name} in command ${command.name}.`)
+                    }
                 } else {
+                    flag.inherit = (flag.inherit === undefined || flag.inherit === null) ? true : flag.inherit;
+
                     existingCommand.flags?.push(flag);
                 }
             });
@@ -84,4 +125,25 @@ export const configure = () => {
     });
 
     checkCommands();
+}
+
+export const getCommand = (name: string): Command | undefined => {
+    return commands.find(c => c.name === name);
+}
+
+export const getAllFlags = (): Flag[] => {
+    const flags: Flag[] = [];
+
+    // TODO: Necesito que el objeto del flag siempre sea la declaracion, nunca la herencia.
+    // commands.forEach((command) => {
+    //     if (command.flags) {
+    //         command.flags.forEach((flag) => {
+    //             if (flags.find(f => f.name === flag.name)) {
+    //                 flags.push(flag);
+    //             }
+    //         });
+    //     }
+    // });
+
+    return flags;
 }

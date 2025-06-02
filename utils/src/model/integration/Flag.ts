@@ -6,7 +6,7 @@ import { HelpBase } from "./Help";
  * 'switch' ==> Controla la activacion o no de ese flag
  * 'value' ==> Se debe indicar un valor
  */
-export type FlagType = 'switch' | 'value';
+export type FlagType = 'switch' | 'value' | 'file';
 
 interface FlagBase {
     /**
@@ -39,4 +39,4 @@ export type Flag =
              */
             inherit: boolean;
         })
-    | (FlagBase & { type?: undefined, inherit?: undefined })   
+    | (FlagBase & { type?: undefined, inherit?: undefined });   

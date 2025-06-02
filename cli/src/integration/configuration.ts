@@ -77,7 +77,7 @@ export default {
                 },
                 {
                     name: ARGV_FLAG_ENV,
-                    type: 'value',
+                    type: 'file',
                     inherit: false,
                     description: 'Configures the environment file.',
                     detail: 'Configures the environment file. If not declared, use the .env located in the project root. If not declared, use the .env located in the project root.'

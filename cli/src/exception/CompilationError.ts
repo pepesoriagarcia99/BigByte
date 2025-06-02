@@ -4,8 +4,8 @@ export interface CompilationErrorData {
 }
 
 export class CompilationError extends Error {
-    constructor(error: CompilationErrorData) {
-      super(`TypeScript compilation failed with code ${error.code}: \n ${error.resume}`);
-      this.name = 'CompilationError';
-    }
+  constructor(error: CompilationErrorData) {
+    super(`TypeScript compilation failed with code ${error.code}: \n ${error.resume}`);
+    this.name = 'CompilationError';
   }
+}
