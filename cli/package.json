@@ -34,7 +34,8 @@
     "npm:publish": "npm run build && npm publish --access public",
     "yalc:install": "npx yalc add @hexagonal/utils && npm i",
     "yalc:publish": "npm run build && npx yalc publish --push",
-    "test": "npx tsc --project tsconfig.test.json && node --test dist/test"
+    "test": "npx tsc --project tsconfig.test.json && node --test dist/test",
+    "test:one": "npx tsc --project tsconfig.test.json && node --test"
   },
   "dependencies": {
     "@hexagonal/utils": "file:.yalc/@hexagonal/utils",

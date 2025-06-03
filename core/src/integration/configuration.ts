@@ -1,18 +1,15 @@
 import { ARGV_FLAG_DEBUG } from "@hexagonal/utils/constant";
-import { Command, Configuration } from "@hexagonal/utils/integration";
-
-
-const commands: Command[] = [
-    {
-        name: 'run',
-        flags: [
-            {
-                name: ARGV_FLAG_DEBUG,
-            }
-        ],
-    }
-]
+import { Configuration } from "@hexagonal/utils/integration";
 
 export default {
-    commands
+    commands: [
+        {
+            name: 'run',
+            flags: [
+                {
+                    name: ARGV_FLAG_DEBUG,
+                }
+            ],
+        }
+    ]
 } as Configuration;

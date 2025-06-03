@@ -26,15 +26,18 @@ const processEnvironment = ({ DEFAULT_VALUES }: Environment) => {
     }
 }
 
-const writeValue = <T>(key: keyof T, currentFlag: T, newFlag: T, defulatValue?: any): void => {
-    const currentValue = currentFlag[key];
-    const newValue = newFlag[key];
+const writeValue = <T>(key: keyof T, currentObj: T, newObject: T, defulatValue?: any): void => {
+    console.log("🚀 ~ key:", key)
+    const currentValue = currentObj[key];
+    console.log("🚀 ~ currentValue:", currentValue)
+    const newValue = newObject[key];
+    console.log("🚀 ~ newValue:", newValue)
 
     if (!currentValue && newValue) {
-        currentFlag[key] = newValue;
+        currentObj[key] = newValue;
     }
     else if (!currentValue && !newValue && defulatValue !== undefined) {
-        currentFlag[key] = defulatValue;
+        currentObj[key] = defulatValue;
     }
     else if (currentValue && newValue && currentValue !== newValue) {
         throw {
@@ -44,10 +47,35 @@ const writeValue = <T>(key: keyof T, currentFlag: T, newFlag: T, defulatValue?: 
         } as WriteValueError;
     }
 }
+const processFlag = (command: Command) => {
+    command.flags?.forEach((flag: Flag) => {
+        const existingFlag: Flag | undefined = command.flags?.find((f: Flag) => f.name === flag.name);
 
-const processCommand = (inputCommands: Command[]) => {
-    inputCommands.forEach((command) => {
+        if (existingFlag) {
+            try {
+                // es una declaracion de herencia
+                if (!flag.type && !flag.env) {
+                    existingFlag.inherit = true;
+                }
+
+                writeValue<Flag>('env', existingFlag, flag);
+                writeValue<Flag>('type', existingFlag, flag);
+                writeValue<FlagWithHelp>('description', existingFlag as FlagWithHelp, flag as FlagWithHelp);
+                writeValue<FlagWithHelp>('detail', existingFlag as FlagWithHelp, flag as FlagWithHelp);
+            } catch (err: any) {
+                throw new ConfigurationError(err.key, `An attempt is being made to overwrite ${err.currentValue} by ${err.newValue} in key ${err.key} at flag ${flag.name} in command ${command.name}.`)
+            }
+        } else {
+            flag.inherit = (flag.inherit === undefined || flag.inherit === null) ? true : flag.inherit;
+            command.flags?.push(flag);
+        }
+    });
+}
+
+const processCommand = (processCommands: Command[]) => {
+    processCommands.forEach((command) => {
         const existingCommand: Command | undefined = commands.find(c => c.name === command.name);
+        console.log("🚀 ~ processCommands.forEach ~ existingCommand:", existingCommand)
         if (existingCommand) {
             try {
                 writeValue<Command>('path', existingCommand, command);
@@ -57,27 +85,9 @@ const processCommand = (inputCommands: Command[]) => {
                 throw new ConfigurationError(err.key, `An attempt is being made to overwrite ${err.currentValue} by ${err.newValue} in key ${err.key} at command ${command.name}.`)
             }
 
-            existingCommand.flags?.forEach((flag: Flag) => {
-                const existingFlag: Flag | undefined = existingCommand.flags?.find((f: Flag) => f.name === flag.name);
-
-                if (existingFlag) {
-                    try {
-                        writeValue<Flag>('inherit', existingFlag, flag, true);
-                        writeValue<Flag>('env', existingFlag, flag);
-                        writeValue<Flag>('type', existingFlag, flag);
-
-                        writeValue<FlagWithHelp>('description', existingFlag as FlagWithHelp, flag as FlagWithHelp);
-                        writeValue<FlagWithHelp>('detail', existingFlag as FlagWithHelp, flag as FlagWithHelp);
-                    } catch (err: any) {
-                        throw new ConfigurationError(err.key, `An attempt is being made to overwrite ${err.currentValue} by ${err.newValue} in key ${err.key} at flag ${flag.name} in command ${command.name}.`)
-                    }
-                } else {
-                    flag.inherit = (flag.inherit === undefined || flag.inherit === null) ? true : flag.inherit;
-
-                    existingCommand.flags?.push(flag);
-                }
-            });
+            processFlag(existingCommand);
         } else {
+            console.log("🚀 ~ processCommands.forEach ~ command:", command)
             commands.push(command);
         }
     });
@@ -94,25 +104,32 @@ const processConfiguration = (configuration: Configuration) => {
 }
 
 const checkCommands = () => {
-    // commands.some((command) => {
-    //     // todos los comandos tienen que tener path, description y detail
-    //     if (!command.path || !command.description || !command.detail) {
-    //         // log.error(`Command ${command.name} is missing required properties: path, description, or detail.`);
-    //         // throw new Error(`Command ${command.name} is missing required properties: path, description, or detail.`);
+    const missingKeys = (keys: string[], obj: any) =>  keys.filter(key => !(key in obj));
 
+    const checkCommandKeys = (command: Command): boolean => {
+        if('name' in command && 'path' in command && 'description' in command && 'detail' in command) {
+            return true;
+        } else {
+            const missing = missingKeys(['name', 'path', 'description', 'detail'], command);
+            throw new ConfigurationError('Command', `The command ${command.name} is missing required keys: ${missing.join(', ')}.`);
+        }
+    };
 
+    const checkFlagKeys = (flag: Flag): boolean => {
+        if('name' in flag && 'type' in flag && 'inherit' in flag && 'description' in flag && 'detail' in flag) {
+            return true;
+        } else {
+            throw new ConfigurationError('Flag', `The flag ${flag.name} is missing required keys.`);
+        }
+    };
 
-    //         return true && flags; // Stop processing if a command is invalid
-    //     }
-    // });
-
-    //     // todos los flags de cada comando tienen que tener name, type, inherit, description y detail
-    // const flags = command.flags?.some((flag) => {
-    //     if (!flag.name || !flag.type || flag.inherit === undefined || !flag.description || !flag.detail) {
-    //         log.error(`Flag ${flag.name} in command ${command.name} is missing required properties: name, type, inherit, description, or detail.`);
-    //         return true; // Stop processing if a flag is invalid
-    //     }
-    // });
+    commands.every((command: Command, index: number) => {
+        if (Boolean(command.flags) && Array.isArray(command.flags) && command.flags.length > 0) {
+            return checkCommandKeys(command) && command.flags.every((flag: Flag, index: number) => checkFlagKeys(flag));
+        } else {
+            return checkCommandKeys(command);
+        }
+    });
 }
 
 export const configure = () => {
@@ -134,16 +151,15 @@ export const getCommand = (name: string): Command | undefined => {
 export const getAllFlags = (): Flag[] => {
     const flags: Flag[] = [];
 
-    // TODO: Necesito que el objeto del flag siempre sea la declaracion, nunca la herencia.
-    // commands.forEach((command) => {
-    //     if (command.flags) {
-    //         command.flags.forEach((flag) => {
-    //             if (flags.find(f => f.name === flag.name)) {
-    //                 flags.push(flag);
-    //             }
-    //         });
-    //     }
-    // });
+    commands.forEach((command) => {
+        if (command.flags) {
+            command.flags.forEach((flag) => {
+                if (flags.find(f => f.name === flag.name)) {
+                    flags.push(flag);
+                }
+            });
+        }
+    });
 
     return flags;
 }

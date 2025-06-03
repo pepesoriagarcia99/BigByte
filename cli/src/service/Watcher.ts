@@ -9,7 +9,7 @@ import { buildRootDir, compileTypeScript } from "./TypeScriptCompiler";
 import { readAddons } from "./Addon";
 import { relaunch } from "./Launcher";
 import { envFileName, envFilePath } from "./Arguments";
-import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
+// import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
 
 
 /**
@@ -49,32 +49,32 @@ export const initChangeDetector = () => {
     const relativePath = path.relative(ROOT_PATH, filePath);
     log.debug(`[${new Date().toLocaleTimeString()}] Modification: ${relativePath}`);
 
-  //   if (filePath.includes('package.json')) {
-  //     // si hay nuevas dependencias, se vuelven a cargar las addons
-  //     // y se recargan los valores por defecto de las variables de entorno
-  //     readAddons();
+    // if (filePath.includes('package.json')) {
+    //   // si hay nuevas dependencias, se vuelven a cargar las addons
+    //   // y se recargan los valores por defecto de las variables de entorno
+    //   readAddons();
 
-  //     readEnvironment();
-  //     setDefaultEnvironmentValues();
-  //   }
-  //   else if (filePath.includes(envFileName)) {
-  //     // si hay nuevas dependencias, se vuelven a cargar las addons
-  //     // y se recargan los valores por defecto de las variables de entorno
-  //     readAddons();
+    //   readEnvironment();
+    //   setDefaultEnvironmentValues();
+    // }
+    // else if (filePath.includes(envFileName)) {
+    //   // si hay nuevas dependencias, se vuelven a cargar las addons
+    //   // y se recargan los valores por defecto de las variables de entorno
+    //   readAddons();
 
-  //     readEnvironment();
-  //     setDefaultEnvironmentValues();
-  //   }
-  //   else {
-  //     try {
-  //       await compileTypeScript(filePath);
-  //     } catch (error: any) {
-  //       log.error('Modification error: ', error);
-  //     }
-  //   }
+    //   readEnvironment();
+    //   setDefaultEnvironmentValues();
+    // }
+    // else {
+    //   try {
+    //     await compileTypeScript(filePath);
+    //   } catch (error: any) {
+    //     log.error('Modification error: ', error);
+    //   }
+    // }
 
-  //   relaunch();
-  // }
+    relaunch();
+  }
 
   watcherProcess.on('change', refresh);
   watcherProcess.on('add', refresh);

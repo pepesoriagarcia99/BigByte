@@ -1,12 +1,12 @@
-import { CoreRegistry } from '@hexagonal/utils/registry';
+// import { CoreRegistry } from '@hexagonal/utils/registry';
 
-let registry: CoreRegistry;
+// let registry: CoreRegistry;
 
 /**
  * Setea el CoreRegistry llegado desde el core a traves la metadata de reflect-metadata
  */
-export const setCoreRegistry = (coreRegistry: CoreRegistry) => {
-    registry = coreRegistry;
-}
+// export const setCoreRegistry = (coreRegistry: CoreRegistry) => {
+//     registry = coreRegistry;
+// }
 
-export default registry;
+// export default registry;

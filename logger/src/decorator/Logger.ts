@@ -11,7 +11,7 @@ import { METADATA_CORE_COMPONENT_REGISTRY, METADATA_DECORATOR_NAME } from "@hexa
 import { ComponentType, declareDecorator, executeDecorator, MissingComponentRegistryError } from "@hexagonal/utils/registry";
 
 import { DECORATOR_LOGGER_NAME, LIBRARY_NAME, METADATA_LOGGER_DECORATED } from "../constant";
-import { LoggerService } from "../service/Logger";
+// import { LoggerService } from "../service/Logger";
 
 
 
@@ -43,7 +43,7 @@ export const Logger = (): ClassDecorator => {
             throw new MissingComponentRegistryError();
         }
 
-        coreRegistry.add(LoggerService, [], { type: ComponentType.COMPONENT, injectable: true, recreate: true, invoker: Target });
+        // coreRegistry.add(LoggerService, [], { type: ComponentType.COMPONENT, injectable: true, recreate: true, invoker: Target });
 
         executeDecorator(DECORATOR_LOGGER_NAME);
     }

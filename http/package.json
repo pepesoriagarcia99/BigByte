@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Jose Eduardo Soria Garcia <pepesoriagarcia99@gmail.com>",
   "license": "ISC",
-  "private": true,
+  "private": false,
   "main": "lib/index.js",
   "scripts": {
     "build": "npx tsc",

@@ -11,10 +11,12 @@
 import { readAddons } from "./service/Addon"
 import { configure } from "./service/Configuration";
 import { readArguments } from "./service/Arguments";
+import { readTargetPackageJson } from "./service/Package";
 
 // import { readEnvironment } from "./service/Environment";
 
 // se leen las addons y se configura el objeto
+readTargetPackageJson();
 readAddons();
 configure();
 

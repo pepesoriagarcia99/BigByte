@@ -2,7 +2,7 @@
 // import { MissingCoreInstanceRegistryError } from '@hexagonal/utils/registry';
 
 import "reflect-metadata";
-import { setCoreRegistry } from '../service/Registry';
+// import { setCoreRegistry } from '../service/Registry';
 
 export const Server = (): ClassDecorator => {
     return (target: Function) => {

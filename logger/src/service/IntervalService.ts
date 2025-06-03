@@ -1,5 +1,5 @@
-import environment from '@hexagonal/utils/environment';
-import { TRACE_LOG_FILE_MODE, TRACE_LOG_FILE_SIZE_INTERVAL, TRACE_LOG_FILE_TIME_INTERVAL } from '../constant';
+// import environment from '@hexagonal/utils/environment';
+// import { TRACE_LOG_FILE_MODE, TRACE_LOG_FILE_SIZE_INTERVAL, TRACE_LOG_FILE_TIME_INTERVAL } from '../constant';
 
 // function obtenerMegabytes(pathArchivo: string): number {
 //     const stats = fs.statSync(pathArchivo);
@@ -12,38 +12,38 @@ import { TRACE_LOG_FILE_MODE, TRACE_LOG_FILE_SIZE_INTERVAL, TRACE_LOG_FILE_TIME_
 // setInterval(miFuncion, 5000); // milisegundos
 
 export default () => {
-    const logFileMode = environment.get(TRACE_LOG_FILE_MODE) === 'true';
-    const logFile = environment.get(TRACE_LOG_FILE_MODE);
+    // const logFileMode = environment.get(TRACE_LOG_FILE_MODE) === 'true';
+    // const logFile = environment.get(TRACE_LOG_FILE_MODE);
 
-    const logFileTimeInterval = environment.get(TRACE_LOG_FILE_TIME_INTERVAL);
-    const logFileSizeInterval = environment.get(TRACE_LOG_FILE_SIZE_INTERVAL);
+    // const logFileTimeInterval = environment.get(TRACE_LOG_FILE_TIME_INTERVAL);
+    // const logFileSizeInterval = environment.get(TRACE_LOG_FILE_SIZE_INTERVAL);
 
-    if (logFileMode && !(logFileTimeInterval || logFileSizeInterval)) {
-        // warning, va a guardar logs y nunca los va a limpiar
-    }
+    // if (logFileMode && !(logFileTimeInterval || logFileSizeInterval)) {
+    //     // warning, va a guardar logs y nunca los va a limpiar
+    // }
 
-    if (logFileMode && logFileTimeInterval) {
-        // Intercalos permitidos:
+    // if (logFileMode && logFileTimeInterval) {
+    //     // Intercalos permitidos:
 
-        // size:
-        // gb -> gigabytes
-        // mb -> megabytes
-        // kb -> kilobytes
+    //     // size:
+    //     // gb -> gigabytes
+    //     // mb -> megabytes
+    //     // kb -> kilobytes
 
-        // *TRANSFORMAR TODO A BYTES
-
-
-        // Time:
-        // segundos
-        // minutos
-        // horas
-        // dias
-
-        // *TRANSFORMAR TODO A MILISEGUNDOS
+    //     // *TRANSFORMAR TODO A BYTES
 
 
+    //     // Time:
+    //     // segundos
+    //     // minutos
+    //     // horas
+    //     // dias
+
+    //     // *TRANSFORMAR TODO A MILISEGUNDOS
 
 
 
-    }
+
+
+    // }
 }
