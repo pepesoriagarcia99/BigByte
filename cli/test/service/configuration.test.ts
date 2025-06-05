@@ -14,15 +14,30 @@ import { Configuration } from "@hexagonal/utils/integration";
 import { Addon } from "../../src/model/Addon";
 
 import { addons } from '../../src/service/Addon';
-import { configure } from '../../src/service/Configuration'
+import { configure, commands } from '../../src/service/Configuration'
 
 const coreConfiguration: Configuration = {
     commands: [
+        {
+            name: 'FAKE_COMMAND',
+            path: 'FAKE_COMMAND',
+            description: 'FAKE_COMMAND',
+            detail: 'FAKE_COMMAND',
+            flags: '*',
+        },
         {
             name: 'run',
             flags: [
                 {
                     name: ARGV_FLAG_DEBUG,
+                },
+                {
+                    name: 'ARGV_FAKE',
+                    env: 'ENV_FAKE',
+                    type: 'value',
+                    inherit: true,
+                    description: 'FAKE',
+                    detail: 'FAKE'
                 }
             ],
         }
@@ -128,4 +143,15 @@ mockAddons.forEach(addon => {
 
 test('Load the configuration', () => {
     configure();
+
+    // el resultado de los commands el flag ARGV_FLAG_DEBUG debe ser (inherit: true),
+    commands.forEach(command => {
+        console.log('RESUL COMAND ------------>', command);
+
+        // if (command.flags && Array.isArray(command.flags)) {
+        //     command.flags?.forEach(flag => {
+        //         console.log('flag:', flag);
+        //     });
+        // }
+    });
 });

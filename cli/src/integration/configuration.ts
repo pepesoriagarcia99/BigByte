@@ -29,21 +29,21 @@ export default {
             path: path.join(__dirname, '../command/Version.ts'),
             description: 'Displays the current version of the CLI.',
             detail: 'Displays the current version of the CLI. This command is useful to check if you are using the latest version of the CLI or to report issues with a specific version.',
-            flags: ['-'],
+            flags: '-',
         },
         {
             name: ARGV_FLAG_VERSION_SHORT,
             path: path.join(__dirname, '../command/Version.ts'),
             description: 'Displays the current version of the CLI.',
             detail: 'Displays the current version of the CLI. This command is useful to check if you are using the latest version of the CLI or to report issues with a specific version.',
-            flags: ['-'],
+            flags: '-',
         },
         {
             name: ARGV_COMMAND_HELP,
             path: path.join(__dirname, '../command/Help.ts'),
             description: 'Displays the help information for the CLI commands.',
             detail: 'Displays the help information for the CLI commands. This command is useful to understand how to use the CLI and its available commands and flags.',
-            flags: ['*'],
+            flags: '*',
         },
         {
             name: ARGV_COMMAND_RUN,
@@ -71,7 +71,7 @@ export default {
                     name: ARGV_FLAG_DEBUG,
                     env: ENV_DEBUG_MODE,
                     type: 'switch',
-                    inherit: true,
+                    inherit: false,
                     description: 'Activates debug mode.',
                     detail: 'Activates debug mode. This mode is useful for development, as it provides additional logging and debugging information to help identify issues in the application.'
                 },
