@@ -1,0 +1,2 @@
+Dado el esquema de datos del addon de data, tambien sera usable el grafo de rutas del addon de http.
+Se pueden generar lo necesario para permitir accesos a datos con un llm.
