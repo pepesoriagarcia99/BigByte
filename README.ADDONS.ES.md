@@ -22,7 +22,7 @@ archivo configuration.ts:
             * Los flags son estrictamente comprobados para cada comando, el addon (y tu app) solo podra usar un flag si es configurado en este campo.
     }
 
-<!-- Sin desarrollar -->
+<!-- TODO: -->
 archivo hooks:
     * Archivo debe exportar las funciones onAfterBuild, onBeforeBuild, onAfterInit, onBeforeInit
     * reciben por parametros (¿no se?)
@@ -56,5 +56,31 @@ export const NewDecorator = (): ClassDecorator => (Target: Function): void => {
 
     Reflect.defineMetadata(METADATA_COMPONENT_TYPE, componentType, Target);
     Reflect.defineMetadata(`${METADATA_DECORATOR_NAME}=${DECORATOR_APP_NAME}`, true, Target); // siempre debe declarar el decorador para un buen funcionamiento
+}
+```
+
+## Eventos
+Todos los decoradores deben ser declarados y cuando termine su logica marcarlos como ejecutados
+Puedes suscribir tu decorador a algunos eventos de ejecucion para el orden de ejecucion. 
+
+```JS
+// tipos de eventos
+type EventType = 'first' | 'last' | string
+```
+
+```JS
+export const App = (): ClassDecorator => {
+    declareDecorator(DECORATOR_APP_NAME);
+
+    return (Target: Function): void => {
+        log.dev(`${DECORATOR_APP_NAME} decorator applied to ${Target.name}`);
+
+        decoratorExecEvent.on('last', () => {
+            const paramTypes = Reflect.getMetadata("design:paramtypes", Target) ?? [];
+            coreComponentRegistry.add(Target, paramTypes, { type: componentType, injectable: false });
+        });
+
+        executeDecorator(DECORATOR_APP_NAME);
+    }
 }
 ```
