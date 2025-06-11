@@ -3,12 +3,12 @@ import { ROOT_PATH } from "@hexagonal/utils/constant";
 
 import { Command, Configuration, Environment, Flag } from "@hexagonal/utils/lib/model/integration";
 
-import { MissingArgumentError } from "../exception/MissingArgumentError";
+import { MissingArgumentError } from "../../exception/MissingArgumentError";
 
-import { BIN_NAME, DEFAULT_ENV_FILE_PATH } from "../constant";
+import { BIN_NAME, DEFAULT_ENV_FILE_PATH } from "../../constant";
 import { existsSync } from "node:fs";
-import { MissingFileError } from "../exception/MissingFileError";
-import { MalformedArgumentError } from "../exception";
+import { MissingFileError } from "../../exception/MissingFileError";
+import { MalformedArgumentError } from "../../exception";
 // import { argvInheritedAddons } from "./Addons";
 import { getCommand } from "./Configuration";
 
@@ -60,14 +60,14 @@ export let envFileName: string;
 /**
  * Configura y valida el path del archivo a ejecutar
  */
-// const configureTargetApp = (argv: string[]) => {
-//     targetAppPath = argv[argv.length - 1];
-//     targetAppFileName = path.basename(targetAppPath);
+const configureTargetApp = (argv: string[]) => {
+    targetAppPath = argv[argv.length - 1];
+    targetAppFileName = path.basename(targetAppPath);
 
-//     if (!targetAppFileName || !targetAppFileName.includes('.ts')) {
-//         throw new MissingArgumentError('[MAIN_FILE]', 'The path of the application to be executed has not been provided.');
-//     }
-// }
+    if (!targetAppFileName || !targetAppFileName.includes('.ts')) {
+        throw new MissingArgumentError('[MAIN_FILE]', 'The path of the application to be executed has not been provided.');
+    }
+}
 
 // export const getActiveFlag = (flag: string): number => {
 //     return flags.findIndex(f => f === flag);
@@ -128,6 +128,9 @@ export const readArguments = () => {
         throw new MissingArgumentError('command', `The command "${command}" is not valid. Use "${BIN_NAME} help" for instructions.`);
     }
 
+    configureTargetApp(argv);
+    argv.pop();
+
     // no se pueden añadir flags repetidos
     // comprobar si el tipo del flag es correcto [value, file]
     // comprobar los tipos especiales [*, -]
@@ -136,5 +139,7 @@ export const readArguments = () => {
             
     //     }
     // }
+
+    
 }
 

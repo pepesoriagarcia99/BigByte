@@ -6,14 +6,14 @@ import { PackageModel } from '@hexagonal/utils/cli';
 import Logger from "@hexagonal/utils/logger";
 
 // import { BANNER_MODE, CLI_PACKAGE_PATH, INHERITED_ARGV, LIBRARY_NAME } from "../constant";
-import { readJsonFile } from "../util/File";
+import { readJsonFile } from "../../util/File";
 
 // import { envFileData } from "./Environment";
 import { displayBanner } from "./Banner";
-import { buildOutDir, buildRootDir } from "./TypeScriptCompiler";
-import { targetAppPath } from "./Arguments";
+import { targetAppPath } from "../common/Arguments";
 // import { argvInheritedAddons } from "./Addon";
 import { initIpc } from "./Ipc";
+import { buildOutDir, buildRootDir } from "../common/TypeScriptCompiler";
 
 
 // const log = new Logger('Launcher', LIBRARY_NAME);

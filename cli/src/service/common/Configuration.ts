@@ -1,12 +1,12 @@
 import Logger from "@hexagonal/utils/logger";
 import { Command, Configuration, Environment, Flag, FlagType, HelpBase } from "@hexagonal/utils/lib/model/integration";
 
-import { LIBRARY_NAME } from "../constant";
+import { LIBRARY_NAME } from "../../constant";
 import { addons } from "./Addon";
-import cliConfiguration from "../integration/configuration";
-import { ConfigurationError } from "../exception/ConfigurationError";
-import { WriteValueError } from "../model/WriteValueError";
-import { CommandWithHelp, FlagWithHelp } from "../model/Integration";
+import cliConfiguration from "../../integration/configuration";
+import { ConfigurationError } from "../../exception/ConfigurationError";
+import { WriteValueError } from "../../model/WriteValueError";
+import { CommandWithHelp, FlagWithHelp } from "../../model/Integration";
 
 
 const log = new Logger('Configuration', LIBRARY_NAME);

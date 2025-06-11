@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "fs";
 import { ROOT_PATH } from "@hexagonal/utils/constant";
 import Logger from "@hexagonal/utils/logger";
 
-import { DEFAULT_BANNER_PATH, LIBRARY_NAME } from "../constant";
+import { DEFAULT_BANNER_PATH, LIBRARY_NAME } from "../../constant";
 
 const log = new Logger('Banner', LIBRARY_NAME);
 log.setOptions({ header: false })

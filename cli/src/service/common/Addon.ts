@@ -5,11 +5,11 @@ import { existsSync } from "node:fs";
 import Logger from "@hexagonal/utils/logger";
 import { ROOT_PATH, LIBRARY_ORGANIZATION_NAME } from "@hexagonal/utils/constant";
 
-import { INTEGRATION_CONFIGURATION_PATH, LIBRARY_NAME } from "../constant";
+import { INTEGRATION_CONFIGURATION_PATH, LIBRARY_NAME } from "../../constant";
 import { getInstalledVersion, packageJson } from "./Package";
-import { MissingConfigurationError } from "../exception";
+import { MissingConfigurationError } from "../../exception";
 
-import { Addon } from "../model/Addon";
+import { Addon } from "../../model/Addon";
 import { Configuration } from "@hexagonal/utils/lib/model/integration";
 
 

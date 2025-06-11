@@ -8,10 +8,10 @@
 // import versionExec from "./command/Version";
 // import runExec from "./command/Run";
 // import packageExec from "./command/Package";
-import { readAddons } from "./service/Addon"
-import { configure } from "./service/Configuration";
-import { readArguments } from "./service/Arguments";
-import { readTargetPackageJson } from "./service/Package";
+import { readAddons } from "./service/common/Addon"
+import { configure } from "./service/common/Configuration";
+import { readArguments } from "./service/common/Arguments";
+import { readTargetPackageJson } from "./service/common/Package";
 
 // import { readEnvironment } from "./service/Environment";
 

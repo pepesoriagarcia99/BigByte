@@ -2,12 +2,12 @@ import Logger from "@hexagonal/utils/logger";
 
 // import { ARGV_FLAG_DEBUG, ARGV_FLAG_DOCTOR, ARGV_FLAG_WATCH, LIBRARY_NAME } from "../constant";
 
-import { initChangeDetector, watcherProcess } from "../service/Watcher";
+import { initChangeDetector, watcherProcess } from "../service/run/Watcher";
 // import { getActiveFlag } from "../service/Arguments";
 import { compileTypeScript, readTsConfig } from "../service/TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "../service/Environment";
-import { launch } from "../service/Launcher";
-import { readTargetPackageJson } from "../service/Package";
+import { launch } from "../service/run/Launcher";
+import { readTargetPackageJson } from "../service/common/Package";
 import { doctorServerProcess, initDoctorServer } from "../service/run/Doctor";
 import { CompilationError, CompilationErrorData } from "../exception/CompilationError";
 import { ARGV_COMMAND_RUN } from "../constant/argv";

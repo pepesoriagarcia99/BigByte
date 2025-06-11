@@ -3,12 +3,12 @@ import chokidar, { FSWatcher } from 'chokidar';
 import { ROOT_PATH } from "@hexagonal/utils/constant";
 import Logger from "@hexagonal/utils/logger";
 
-import { LIBRARY_NAME } from "../constant";
+import { LIBRARY_NAME } from "../../constant";
 
-import { buildRootDir, compileTypeScript } from "./TypeScriptCompiler";
-import { readAddons } from "./Addon";
+import { readAddons } from "../common/Addon";
 import { relaunch } from "./Launcher";
-import { envFileName, envFilePath } from "./Arguments";
+import { envFileName, envFilePath } from "../common/Arguments";
+import { buildRootDir } from "../common/TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
 
 
