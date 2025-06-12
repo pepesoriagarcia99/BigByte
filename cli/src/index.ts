@@ -12,6 +12,7 @@ import { readAddons } from "./service/common/Addon"
 import { configure } from "./service/common/Configuration";
 import { readArguments } from "./service/common/Arguments";
 import { readTargetPackageJson } from "./service/common/Package";
+import { readEnvironment } from "./service/common/Environment";
 
 // import { readEnvironment } from "./service/Environment";
 
@@ -27,7 +28,7 @@ readArguments();
 // lee los environments y los guarda
 // si el valor ya existe, significa que lo seteo un flag
 // si el valor no existe despues de esto, se añade el valor por defecto
-// readEnvironment();
+readEnvironment();
 
 /**
  * Pensando:

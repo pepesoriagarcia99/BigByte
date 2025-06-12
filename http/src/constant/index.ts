@@ -19,3 +19,6 @@ export const ARGV_API_ROOT = '--api-root';
 export const ARGV_ACCESS_LOG_FILE = '--access-log-file';
 export const ARGV_ACCESS_LOG_FILE_TIME_INTERVAL = '--access-log-file-time-interval';
 export const ARGV_ACCESS_LOG_FILE_SIZE_INTERVAL = '--access-log-file-size-interval';
+
+/** Decorators */
+export const DECORATOR_GET_NAME = '@Get';

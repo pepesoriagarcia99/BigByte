@@ -17,6 +17,9 @@ import { DECORATOR_LOGGER_NAME, LIBRARY_NAME, METADATA_LOGGER_DECORATED } from "
 
 const log = new UtilsLogger(DECORATOR_LOGGER_NAME, LIBRARY_NAME);
 
+/**
+ * ! Debe ser el ultimo decorador aplicado a la clase principal siempre
+ */
 export const Logger = (): ClassDecorator => {
     declareDecorator(DECORATOR_LOGGER_NAME);
 

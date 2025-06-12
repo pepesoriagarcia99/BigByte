@@ -7,20 +7,21 @@ import cliConfiguration from "../../integration/configuration";
 import { ConfigurationError } from "../../exception/ConfigurationError";
 import { WriteValueError } from "../../model/WriteValueError";
 import { CommandWithHelp, FlagWithHelp } from "../../model/Integration";
+import { environmentData } from "./Environment";
 
 
 const log = new Logger('Configuration', LIBRARY_NAME);
 
-export const evnDefaultValues = new Map<string, string>();
+// export const evnDefaultValues = new Map<string, string>();
 export const commands: Command[] = [];
 
 const processEnvironment = ({ DEFAULT_VALUES }: Environment) => {
     if (DEFAULT_VALUES) {
         Object.entries(DEFAULT_VALUES).forEach(([key, value]) => {
-            if (!evnDefaultValues.has(key)) {
-                evnDefaultValues.set(key, String(value));
+            if (!environmentData.has(key)) {
+                environmentData.set(key, String(value));
             } else {
-                log.warn(`Environment variable ${key} is already set to ${evnDefaultValues.get(key)}. Skipping update to ${value}.`);
+                log.warn(`Environment variable ${key} is already set to ${environmentData.get(key)}. Skipping update to ${value}.`);
             }
         });
     }

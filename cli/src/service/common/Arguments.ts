@@ -129,7 +129,7 @@ export const readArguments = () => {
     }
 
     configureTargetApp(argv);
-    argv.pop();
+    // argv.pop();
 
     // no se pueden añadir flags repetidos
     // comprobar si el tipo del flag es correcto [value, file]
