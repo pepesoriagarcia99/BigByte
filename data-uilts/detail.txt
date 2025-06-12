@@ -1,0 +1,2 @@
+almacenara los modelos y las funcionalidades comunues de las librerias relacionadas con data.
+librerias: data | security | cloud | mongo

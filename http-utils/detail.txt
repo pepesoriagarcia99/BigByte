@@ -1,0 +1,2 @@
+almacenara los modelos y las funcionalidades comunues de las librerias relacionadas con http.
+librerias: http | socket | security | cache | cloud 
