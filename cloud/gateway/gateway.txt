@@ -1,0 +1,4 @@
+el gateway recibira tambien las configuraciones de los grafos de rutas.
+comprobara la seguridad de los microservicios
+
+hara de proxy y llamara a los microservicios
