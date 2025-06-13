@@ -22,3 +22,7 @@ export const ARGV_ACCESS_LOG_FILE_SIZE_INTERVAL = '--access-log-file-size-interv
 
 /** Decorators */
 export const DECORATOR_GET_NAME = '@Get';
+export const DECORATOR_POST_NAME = '@Post';
+export const DECORATOR_PUT_NAME = '@Put';
+export const DECORATOR_DELETE_NAME = '@Delete';
+export const DECORATOR_CONTROLLER_NAME = '@Controller';

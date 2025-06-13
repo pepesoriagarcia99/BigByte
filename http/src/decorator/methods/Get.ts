@@ -1,6 +1,7 @@
 import { declareDecorator, executeDecorator } from "@hexagonal/utils/registry";
 import Logger from "@hexagonal/utils/logger";
 import { DECORATOR_GET_NAME } from "../../constant";
+import { currentController } from "../Controller";
 
 const log = new Logger(DECORATOR_GET_NAME, LIBRARY_NAME);
 
@@ -13,6 +14,8 @@ export const Get = (): MethodDecorator => {
         /**
          * TODO: Comprobar que se esta usando en un metodo, solo si con el tipo no es suficiente
          */
+
+        currentController.routes.push({});
 
         executeDecorator(DECORATOR_GET_NAME);
     }
