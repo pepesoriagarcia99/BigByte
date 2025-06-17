@@ -80,3 +80,10 @@ BigByte is designed with the principles of **modularity**, **strict typing**, an
 npx bigbyte-cli new my-app
 cd my-app
 npm run start:dev
+```
+
+## ✅ Contributing
+Contributions are welcome! If you have ideas, improvements, or would like to help with development, feel free to create addons. This will help the framework grow and become even more efficient.
+
+## 📜 License
+This project is licensed under the ISC license.
