@@ -9,5 +9,10 @@ import { Environment } from "./Environment";
  */
 export interface Configuration {
     environment?: Environment;
-    commands?: Command[];
+
+    // declaracion de nuevos comandos
+    newCommands?: Command[];
+
+    // declaracion de comandos para nuevos flags
+    commandDeclaration?: Command[];
 }

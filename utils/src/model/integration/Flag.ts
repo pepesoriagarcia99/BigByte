@@ -8,35 +8,16 @@ import { HelpBase } from "./Help";
  */
 export type FlagType = 'switch' | 'value' | 'file';
 
-interface FlagBase {
+export interface Flag extends HelpBase {
     /**
      * Nombre del flag, por ejemplo "--doctor"
-     * 
-     * * Cuando se declara solo el flag es para heredarlo
-     */
+    */
     name: string;
 
     /**
-     * key del environment donde se replica el valor | si no existe no se replica
-     */
+     * key del environment donde se replica el valor. Si no existe no se replica
+    */
     env?: string;
+
+    type: FlagType;
 }
-
-/**
- * Al añadir un type al flag, esta creandolo y heredandolo
- * * Para no 
- */
-export type Flag =
-    | (
-        FlagBase
-        & HelpBase
-        & {
-            type: FlagType,
-
-            /**
-             * Indica si se hereda el flag al lanzador
-             * * Este parametro solo se declara en la creacion de un flag
-             */
-            inherit: boolean;
-        })
-    | (FlagBase & { type?: undefined, inherit?: undefined });   
