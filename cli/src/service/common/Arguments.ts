@@ -1,26 +1,15 @@
 import path from "node:path";
-import { ROOT_PATH } from "@hexagonal/utils/constant";
-
-import { Command, Configuration, Environment, Flag } from "@hexagonal/utils/lib/model/integration";
+import { Command } from "@hexagonal/utils/integration";
 
 import { MissingArgumentError } from "../../exception/MissingArgumentError";
 
-import { BIN_NAME, DEFAULT_ENV_FILE_PATH } from "../../constant";
-import { existsSync } from "node:fs";
-import { MissingFileError } from "../../exception/MissingFileError";
-import { MalformedArgumentError } from "../../exception";
-// import { argvInheritedAddons } from "./Addons";
+import { BIN_NAME } from "../../constant";
 import { getCommand } from "./Configuration";
 
 /** argv data */
-export let action: string;
 export let flags: string[] = [];
 export let targetAppPath: string;
 export let targetAppFileName: string;
-
-/** Environment */
-export let envFilePath: string;
-export let envFileName: string;
 
 /**
  * COnfigura y valida el path de las variables de entorno
@@ -68,10 +57,6 @@ const configureTargetApp = (argv: string[]) => {
         throw new MissingArgumentError('[MAIN_FILE]', 'The path of the application to be executed has not been provided.');
     }
 }
-
-// export const getActiveFlag = (flag: string): number => {
-//     return flags.findIndex(f => f === flag);
-// }
 
 // export const readArguments = () => {
 //     const argv = process.argv.slice(2);
@@ -122,24 +107,17 @@ export const readArguments = () => {
         throw new MissingArgumentError(`${BIN_NAME} [COMMAND]`, `At least one parameter is required, use "${BIN_NAME} help" for instructions.`);
     }
 
-    const command: Command | undefined = getCommand(argv[0]);
+    const action: string = argv[0];
+    const command: Command | undefined = getCommand(action);
 
     if (!command) {
-        throw new MissingArgumentError('command', `The command "${command}" is not valid. Use "${BIN_NAME} help" for instructions.`);
+        throw new MissingArgumentError('command', `The command "${action}" is not valid. Use "${BIN_NAME} help" for instructions.`);
     }
 
     configureTargetApp(argv);
-    // argv.pop();
 
-    // no se pueden añadir flags repetidos
-    // comprobar si el tipo del flag es correcto [value, file]
-    // comprobar los tipos especiales [*, -]
-    // if(command.flags) {
-    //     if() {
-            
-    //     }
-    // }
-
+    console.log(argv);    
+    console.log(command);
     
 }
 

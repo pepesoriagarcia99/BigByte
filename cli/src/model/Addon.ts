@@ -1,4 +1,4 @@
-import { Configuration } from "@hexagonal/utils/lib/model/integration";
+import { Configuration } from "@hexagonal/utils/integration";
 
 export interface Addon {
     name: string;

@@ -7,7 +7,7 @@ import { LIBRARY_NAME } from "../../constant";
 
 import { readAddons } from "../common/Addon";
 import { relaunch } from "./Launcher";
-import { envFileName, envFilePath } from "../common/Arguments";
+// import { envFileName, envFilePath } from "../common/Arguments";
 import { buildRootDir } from "../common/TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
 
@@ -27,9 +27,9 @@ export const initChangeDetector = () => {
     path.join(ROOT_PATH, 'package.json')
   ];
 
-  if (envFilePath) {
-    watchPaths.push(envFilePath);
-  }
+  // if (envFilePath) {
+  //   watchPaths.push(envFilePath);
+  // }
 
   /** 
    * TODO: revisar como de interesante es monitorizar los paquetes instalados o desinstalados 

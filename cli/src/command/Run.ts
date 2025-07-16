@@ -4,7 +4,7 @@ import Logger from "@hexagonal/utils/logger";
 
 import { initChangeDetector, watcherProcess } from "../service/run/Watcher";
 // import { getActiveFlag } from "../service/Arguments";
-import { compileTypeScript, readTsConfig } from "../service/TypeScriptCompiler";
+// import { compileTypeScript, readTsConfig } from "../service/TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "../service/Environment";
 import { launch } from "../service/run/Launcher";
 import { readTargetPackageJson } from "../service/common/Package";

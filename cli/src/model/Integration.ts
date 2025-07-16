@@ -1,4 +1,4 @@
-import { Command, Flag, FlagType, HelpBase } from "@hexagonal/utils/lib/model/integration";
+import { Command, Flag, FlagType, HelpBase } from "@hexagonal/utils/integration";
 
 export type FlagWithHelp = Flag & HelpBase & {
     type: FlagType;

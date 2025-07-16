@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 import Logger from "@hexagonal/utils/logger";
 
-import { DuplicatePropertyError } from "../exception";
+// import { DuplicatePropertyError } from "../exception";
 
-import { envFilePath } from "./Arguments";
-import { DEFAULT_ENV_VALUES, LIBRARY_NAME } from "../constant";
-import { addons } from "./Addons";
+// import { envFilePath } from "./Arguments";
+// import { DEFAULT_ENV_VALUES, LIBRARY_NAME } from "../constant";
+// import { addons } from "./Addons";
 
 // const log = new Logger('Environment', LIBRARY_NAME);
 // export let envFileData: Map<string, string> = new Map(); // variables de entorno del archivo de entorno
@@ -82,7 +82,7 @@ import { addons } from "./Addons";
 //   });
 // }
 
-const log = new Logger('Environment', LIBRARY_NAME);
+// const log = new Logger('Environment', LIBRARY_NAME);
 let defaultEnvironmentData: Map<string, string> = new Map();
 let argvEnvironmentData: Map<string, string> = new Map();
 export let environmentData: Map<string, string> = new Map(); // variables de entorno del archivo de entorno

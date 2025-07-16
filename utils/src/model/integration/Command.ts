@@ -14,7 +14,7 @@ interface CommandBase {
    * ['-'] ==> Significa que IGNORA ningun flag en el valor flags de Arguments.ts.
    * TODO: ['N'] ==> Significa que solo envia los N flags del principio del array de process.argv.
    */
-  flags?: Flag[] | string;
+  flags?: Flag[] | '*' | '-';
 }
 
 

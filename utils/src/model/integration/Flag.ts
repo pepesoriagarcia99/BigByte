@@ -6,7 +6,11 @@ import { HelpBase } from "./Help";
  * 'switch' ==> Controla la activacion o no de ese flag
  * 'value' ==> Se debe indicar un valor
  */
-export type FlagType = 'switch' | 'value' | 'file';
+export enum FlagType {
+    switch = 'switch',
+    value = 'value',
+    file = 'file'
+}
 
 export interface Flag extends HelpBase {
     /**

@@ -2,11 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { ROOT_PATH } from "@hexagonal/utils/constant";
 
-import { MissingConfigurationError } from "../exception/MissingConfigurationError";
-import { MissingFileError } from "../exception/MissingFileError";
-import { FormatError } from "../exception/FormatError";
+import { MissingConfigurationError } from "../../exception/MissingConfigurationError";
+import { MissingFileError } from "../../exception/MissingFileError";
+import { FormatError } from "../../exception/FormatError";
 import { exec, ExecException } from "node:child_process";
-import { CompilationErrorData } from "../exception/CompilationError";
+import { CompilationErrorData } from "../../exception/CompilationError";
+// import { CompilationErrorData } from "../exception/CompilationError";
 
 
 let tscConfigPath = path.join(ROOT_PATH, 'tsconfig.json'); // ruta del tsconfig.json

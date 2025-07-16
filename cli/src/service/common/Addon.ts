@@ -10,7 +10,7 @@ import { getInstalledVersion, packageJson } from "./Package";
 import { MissingConfigurationError } from "../../exception";
 
 import { Addon } from "../../model/Addon";
-import { Configuration } from "@hexagonal/utils/lib/model/integration";
+import { Configuration } from "@hexagonal/utils/integration";
 
 
 const log = new Logger('AddonService', LIBRARY_NAME);
@@ -25,11 +25,11 @@ export const readAddons = (): void => {
     Object.keys(packageJson.dependencies).forEach((dependency: string) => {
         if (dependency.startsWith(LIBRARY_ORGANIZATION_NAME)) {
             const name = dependency.replace(`${LIBRARY_ORGANIZATION_NAME}/`, '');
-            const instaledDependency = getInstalledVersion(dependency);
+            const installedDependency = getInstalledVersion(dependency);
 
             const addon: Addon = {
                 name: name,
-                version: instaledDependency?.version ?? '0.0.0',
+                version: installedDependency?.version ?? '0.0.0',
                 path: path.join(ROOT_PATH, "node_modules", LIBRARY_ORGANIZATION_NAME, name),
             };
 
