@@ -1,11 +1,12 @@
 import { PackageModel, PackageModelLock, PackageModelLockDependency } from '@hexagonal/utils/cli';
-import { ROOT_PATH } from "@hexagonal/utils/constant";
+import { LIBRARY_ORGANIZATION_NAME, ROOT_PATH } from "@hexagonal/utils/constant";
 
 import { MissingConfigurationError } from "../../exception";
 import { readJsonFile } from "../../util/File";
+import { Dependency } from '../../model/Dependency';
 
-export let packageJson: PackageModel;
-export let packageJsonLock: PackageModelLock;
+let packageJson: PackageModel;
+let packageJsonLock: PackageModelLock;
 
 export const getInstalledVersion = (packageName: string): PackageModelLockDependency | undefined => {
     if (!packageJsonLock.packages) {
@@ -23,7 +24,30 @@ export const getInstalledVersion = (packageName: string): PackageModelLockDepend
     return dependency;
 }
 
-export const readTargetPackageJson = (): void => {
+const readTargetPackageJson = (): void => {
     packageJson = readJsonFile<PackageModel>(ROOT_PATH, 'package.json');
     packageJsonLock = readJsonFile<PackageModelLock>(ROOT_PATH, 'package-lock.json');
+}
+
+export const getDependencies = (): Dependency[] => {
+    readTargetPackageJson();
+
+    if (!packageJson.dependencies) {
+        throw new MissingConfigurationError('package.json', 'dependencies')
+    }
+
+    const dependencies: Dependency[] = [];
+    Object.keys(packageJson.dependencies).forEach((dependency: string) => {
+        if (dependency.startsWith(LIBRARY_ORGANIZATION_NAME)) {
+            const name = dependency.replace(`${LIBRARY_ORGANIZATION_NAME}/`, '');
+            const installedDependency = getInstalledVersion(dependency);
+
+            dependencies.push({
+                name: name,
+                version: installedDependency?.version ?? '0.0.0',
+            });
+        }
+    });
+
+    return dependencies;
 }

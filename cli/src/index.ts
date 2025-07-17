@@ -1,39 +1,45 @@
 #!/usr/bin/env node
 
+import { Command, FlagData } from "@hexagonal/utils/lib/model/integration";
+import { BIN_NAME } from "./constant";
+import { MissingArgumentError } from "./exception";
+import { Addon } from "./model/Addon";
+import { Dependency } from "./model/Dependency";
 import { readAddons } from "./service/common/Addon"
-import { readArguments } from "./service/common/Arguments";
-import { readConfigurations } from "./service/common/Configuration";
-import { readTargetPackageJson } from "./service/common/Package";
+import { getMainFile, readArguments } from "./service/common/Arguments";
+import { getCommand, getEnvDefaultValue, readConfigurations } from "./service/common/Configuration";
+import { readEnvironments } from "./service/common/Environment";
+import { launch } from "./service/common/Launcher";
+import { getDependencies } from "./service/common/Package";
 
-readTargetPackageJson();
-readAddons();
-readConfigurations();
+const dependencies: Dependency[] = getDependencies();
+const addons: Addon[] = readAddons(dependencies);
+readConfigurations(addons);
 
-readArguments();
-// configEnvironment();
+const argv = process.argv.slice(2);
 
-/**
- * Pensando:
- * 
- * ejemplo, se tienen que declarar sobre los nuevo flags de los addons un detalle o instrucciones para el comando help
- * 
- * HACER:
- * los addons no podran crear nuevos comandos (por ahora)
- * los nuevos flags que declaren los addons simplemente guardaran los valores en los env. Es decir todo lo declarado sera post ejecucion de cli
- */
+if (argv.length === 0) {
+    throw new MissingArgumentError(`${BIN_NAME} [COMMAND]`, `At least one parameter is required, use "${BIN_NAME} help" for instructions.`);
+}
 
-// if(action === ARGV_COMMAND_HELP) {
-//     helpExec();
-// }
-// else if(action === ARGV_FLAG_VERSION || action === ARGV_FLAG_VERSION_SHORT) {
-//     versionExec();
-// }
-// else if(action === ARGV_COMMAND_RUN) {
-//     runExec();
-// }
-// else if(action === ARGV_COMMAND_PACKAGE) {
-//     packageExec();
-// }
-// else {
-//     console.error(`Unknown action: ${action}`);
-// }
+const action: string = argv[0];
+const command: Command | undefined = getCommand(action);
+
+if (!command) {
+    throw new MissingArgumentError('command', `The command "${action}" is not valid. Use "${BIN_NAME} help" for instructions.`);
+}
+
+argv.shift(); // Remove the action from argv
+
+const mainFile = getMainFile(argv);
+
+console.log(argv);
+console.log(command);
+console.log(mainFile);
+
+const flagsData: FlagData[] = readArguments(command, argv);
+const envDefaultValues: Map<string, string> = getEnvDefaultValue();
+
+const environmentValues: Map<string, string> = readEnvironments(envDefaultValues);
+
+launch(command, flagsData, environmentValues);

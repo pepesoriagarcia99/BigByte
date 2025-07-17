@@ -1,123 +1,93 @@
 import path from "node:path";
-import { Command } from "@hexagonal/utils/integration";
+import { existsSync } from "node:fs";
+import { Command, Flag, FlagType, FlagData } from "@hexagonal/utils/integration";
+import { ROOT_PATH } from "@hexagonal/utils/constant";
 
 import { MissingArgumentError } from "../../exception/MissingArgumentError";
 
 import { BIN_NAME } from "../../constant";
-import { getCommand } from "./Configuration";
-
-/** argv data */
-export let flags: string[] = [];
-export let targetAppPath: string;
-export let targetAppFileName: string;
-
-/**
- * COnfigura y valida el path de las variables de entorno
- */
-// const configureEnvironment = (argv: string[]) => {
-//     // validacion del argumento --env=<file>
-//     const argvEnvIndex = getActiveFlag(ARGV_FLAG_ENV);
-
-//     // archivo enviroment por defecto
-//     if (argvEnvIndex === -1) {
-//         const envPath = path.join(ROOT_PATH, DEFAULT_ENV_FILE_PATH);
-
-//         if (existsSync(envPath)) {
-//             envFilePath = envPath;
-//             envFileName = path.basename(envPath);
-//         }
-//     }
-//     // archivo enviroment custom por parametros
-//     else {
-//         const argvEnvFilePath = argv[argvEnvIndex].split('=')[1];
-
-//         if (!argvEnvFilePath) {
-//             throw new MissingArgumentError(ARGV_FLAG_ENV, 'The --env argument requires a target path "--env=<file>"');
-//         }
-
-//         const envPath = path.join(ROOT_PATH, argvEnvFilePath);
-
-//         if (!existsSync(envPath)) {
-//             throw new MissingFileError(argvEnvFilePath, envPath);
-//         }
-
-//         envFilePath = envPath;
-//         envFileName = path.basename(envPath);
-//     }
-// }
+import { MissingFileError } from "../../exception";
+import { MainFile } from "../../model/MainFile";
 
 /**
  * Configura y valida el path del archivo a ejecutar
  */
-const configureTargetApp = (argv: string[]) => {
-    targetAppPath = argv[argv.length - 1];
-    targetAppFileName = path.basename(targetAppPath);
+export const getMainFile = (argv: string[]): MainFile => {
+    const targetAppPath = argv[argv.length - 1];
+    const targetAppFileName = path.basename(targetAppPath);
 
     if (!targetAppFileName || !targetAppFileName.includes('.ts')) {
         throw new MissingArgumentError('[MAIN_FILE]', 'The path of the application to be executed has not been provided.');
     }
+
+    argv.pop(); // Remove the target app path from argv
+
+    return {
+        name: targetAppFileName,
+        path: targetAppFileName
+    };
 }
 
-// export const readArguments = () => {
-//     const argv = process.argv.slice(2);
+export const readArguments = (command: Command, argv: string[]): FlagData[] => {
+    const flagsData: FlagData[] = [];
 
-//     if (argv.length === 0) {
-//         throw new MissingArgumentError(`${BIN_NAME} [ACTION] [APP_PATH]`, 'No action has been provided to execute.');
-//     }
+    if ('flags' in command) {
+        if (typeof command.flags === 'string') {
+            /**
+             * Para el caso de '*' no se hara nada
+             * * No se cargaran valores ni configuraciones, sera la accion la que se encargue de ello
+             */
+            if (command.flags !== '-') {
+                throw new MissingArgumentError('flags', `The command "${command.name}" does not accept any flags.`);
+            }
+        } else if (Array.isArray(command.flags)) {
+            argv.forEach((argument) => {
+                const flags: Flag[] = command.flags as Flag[]
+                const flag = flags.find(f => f.name === argument);
 
-//     const validActions = Object.keys(ARGV_ACTIONS_FLAGS);
-//     action = argv[0];
+                if (!flag) {
+                    throw new MissingArgumentError('flags', `The flag "${argument}" is not valid for the command "${command.name}". Use "${BIN_NAME} help ${command.name}" for instructions.`);
+                }
 
-//     if (!validActions.includes(action)) {
-//         throw new MissingArgumentError('action', `The action "${action}" is not valid. Valid actions are: ${validActions.join(', ')}`);
-//     }
+                // configurar valores y temas de flags
+                if (flag.type === FlagType.switch) {
+                    flagsData.push({
+                        flag,
+                        value: true
+                    });
+                } else if (flag.type === FlagType.value) {
+                    const argvSplit = argument.split('=');
+                    const value = argvSplit[1];
 
-//     const validActionFlags: string[] = ARGV_ACTIONS_FLAGS[action];
+                    if (!value) {
+                        throw new MissingArgumentError(`--${flag.name}`, `The flag "${argument}" requires a value. Use "${BIN_NAME} help ${command.name}" for instructions.`);
+                    }
 
-//     // el comando aplica a todos los flags, USADO POR COMANDO HELP
-//     if (validActionFlags.length === 1 && validActionFlags[0] === '*') {
-//         flags = argv.slice(1).filter(arg => arg.startsWith('--'));
-//     }
-//     else if (validActionFlags.length === 1 && validActionFlags[0] === '-') {
-//         // ignora todos los flags, USADO POR COMANDO VERSION
-//     } else {
-//         flags = argv.filter(arg => arg.startsWith('--'));
+                    flagsData.push({ flag, value });
+                } else if (flag.type === FlagType.file) {
+                    const argvSplit = argument.split('=');
 
-//         const processFlags = argv.slice(1).filter(arg => arg.startsWith('--'));
-//         processFlags.concat(argvInheritedAddons);
+                    const splitFilePath = argvSplit[1];
+                    if (!splitFilePath) {
+                        throw new MissingArgumentError(`--${flag.name}`, `The flag "${argument}" requires a file path. Use "${BIN_NAME} help ${command.name}" for instructions.`);
+                    }
 
-//         const invalidFlags = flags.filter(flag => !validActionFlags.includes(flag));
+                    const filePath = path.join(ROOT_PATH, splitFilePath);
+                    const fileName = path.basename(filePath);
 
-//         if (invalidFlags.length > 0) {
-//             throw new MalformedArgumentError('flags', `The flags "${invalidFlags.join(', ')}" are not valid for the action "${action}". Valid flags are: ${validActionFlags.join(', ')}`);
-//         }
+                    if (!filePath || !existsSync(filePath)) {
+                        throw new MissingFileError(fileName, filePath);
+                    }
 
-//         // Los flags son validos para la accion
-//         flags = processFlags;
-
-//         configureTargetApp(argv);
-//         configureEnvironment(argv);
-//     }
-// }
-
-export const readArguments = () => {
-    const argv = process.argv.slice(2);
-
-    if (argv.length === 0) {
-        throw new MissingArgumentError(`${BIN_NAME} [COMMAND]`, `At least one parameter is required, use "${BIN_NAME} help" for instructions.`);
+                    flagsData.push({
+                        flag,
+                        value: filePath
+                    });
+                }
+            });
+        }
     }
 
-    const action: string = argv[0];
-    const command: Command | undefined = getCommand(action);
-
-    if (!command) {
-        throw new MissingArgumentError('command', `The command "${action}" is not valid. Use "${BIN_NAME} help" for instructions.`);
-    }
-
-    configureTargetApp(argv);
-
-    console.log(argv);    
-    console.log(command);
-    
+    return flagsData;
 }
 

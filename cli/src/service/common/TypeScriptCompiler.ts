@@ -7,7 +7,6 @@ import { MissingFileError } from "../../exception/MissingFileError";
 import { FormatError } from "../../exception/FormatError";
 import { exec, ExecException } from "node:child_process";
 import { CompilationErrorData } from "../../exception/CompilationError";
-// import { CompilationErrorData } from "../exception/CompilationError";
 
 
 let tscConfigPath = path.join(ROOT_PATH, 'tsconfig.json'); // ruta del tsconfig.json

@@ -1,20 +1,18 @@
 import Logger from "@hexagonal/utils/logger";
 import { Command, Configuration, Environment, Flag, FlagType } from "@hexagonal/utils/integration";
 
-import cliConfiguration from "../../integration/configuration";
-
 import { LIBRARY_NAME } from "../../constant";
-import { addons } from "./Addon";
 import { ConfigurationError } from "../../exception/ConfigurationError";
+import { Addon } from "../../model/Addon";
 
 
 const log = new Logger('Configuration', LIBRARY_NAME);
 
-export const evnDefaultValues = new Map<string, string>();
+const evnDefaultValues = new Map<string, string>();
 
-export const commands: Command[] = [];
-const newCommands: Command[] = [];
-const commandDeclaration: Command[] = [];
+const commands: Command[] = [];
+let newCommands: Command[] = [];
+let commandDeclaration: Command[] = [];
 
 
 const processEnvironment = ({ DEFAULT_VALUES }: Environment) => {
@@ -102,7 +100,7 @@ const combinedCommands = () => {
         }
 
         // si el comando tiene flags pero la declaracion es un string
-        if(Array.isArray(commands[index].flags) && typeof declaredCommand.flags === 'string') {
+        if (Array.isArray(commands[index].flags) && typeof declaredCommand.flags === 'string') {
             throw new ConfigurationError(declaredCommand.name, `Command with name ${declaredCommand.name} already has flags declared as an array. Cannot add a string flag.`);
         }
 
@@ -113,19 +111,14 @@ const combinedCommands = () => {
          * 
          * * El caso de que el new sea undefined y se intente declara un flag: string --> no se contempla. EL flag: string SOLO SE DECLARA EN CREACION DE COMANDO
          */
-        console.log("🚀 ~ commandDeclaration.forEach ~ declaredCommand.flags:", declaredCommand.flags)
-        console.log("🚀 ~ commandDeclaration.forEach ~ commands[index].flags:", commands[index].flags)
-        if(Array.isArray(commands[index].flags) && Array.isArray(declaredCommand.flags)) {
+        if (Array.isArray(commands[index].flags) && Array.isArray(declaredCommand.flags)) {
             (commands[index].flags as Flag[]).push(...declaredCommand.flags);
-            console.log("🚀 ~ commandDeclaration.forEach ~ commands[index]:", commands[index])
 
         }
     });
 };
 
-export const readConfigurations = () => {
-    processConfiguration(cliConfiguration);
-
+export const readConfigurations = (addons: Addon[]) => {
     addons.forEach((addon) => {
         if (addon.configuration) {
             processConfiguration(addon.configuration);
@@ -133,8 +126,15 @@ export const readConfigurations = () => {
     });
 
     combinedCommands();
+
+    newCommands = [];
+    commandDeclaration = [];
 }
 
 export const getCommand = (name: string): Command | undefined => {
     return commands.find(command => command.name === name);
+}
+
+export const getEnvDefaultValue = (): Map<string, string> => {
+    return evnDefaultValues;
 }
