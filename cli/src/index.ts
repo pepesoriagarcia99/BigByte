@@ -1,16 +1,19 @@
 #!/usr/bin/env node
 
 import { Command, FlagData } from "@hexagonal/utils/lib/model/integration";
+
 import { BIN_NAME } from "./constant";
 import { MissingArgumentError } from "./exception";
+
 import { Addon } from "./model/Addon";
 import { Dependency } from "./model/Dependency";
 import { readAddons } from "./service/common/Addon"
 import { getMainFile, readArguments } from "./service/common/Arguments";
 import { getCommand, getEnvDefaultValue, readConfigurations } from "./service/common/Configuration";
 import { readEnvironments } from "./service/common/Environment";
-import { launch } from "./service/common/Launcher";
+import { launch } from "./service/common/CommandLauncher";
 import { getDependencies } from "./service/common/Package";
+import { ARGV_FLAG_ENV } from "./constant/argv";
 
 const dependencies: Dependency[] = getDependencies();
 const addons: Addon[] = readAddons(dependencies);
@@ -40,6 +43,7 @@ console.log(mainFile);
 const flagsData: FlagData[] = readArguments(command, argv);
 const envDefaultValues: Map<string, string> = getEnvDefaultValue();
 
-const environmentValues: Map<string, string> = readEnvironments(envDefaultValues);
+const envFileArgv: FlagData | undefined = flagsData.find(flagData => flagData.flag.name === ARGV_FLAG_ENV);
+const environmentValues: Map<string, string> = readEnvironments(envDefaultValues, envFileArgv);
 
 launch(command, flagsData, environmentValues);

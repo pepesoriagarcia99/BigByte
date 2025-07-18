@@ -11,7 +11,7 @@ import { Configuration } from "@hexagonal/utils/integration";
 import { Dependency } from "../../model/Dependency";
 
 
-const log = new Logger('AddonService', LIBRARY_NAME);
+const log = new Logger('Addon', LIBRARY_NAME);
 
 export const readAddons = (dependencies: Dependency[]): Addon[] => {
     const addons: Addon[] = [];

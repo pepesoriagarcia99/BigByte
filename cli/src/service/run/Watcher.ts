@@ -6,7 +6,7 @@ import Logger from "@hexagonal/utils/logger";
 import { LIBRARY_NAME } from "../../constant";
 
 import { readAddons } from "../common/Addon";
-import { relaunch } from "./Launcher";
+import { relaunch } from "./RunLauncher";
 // import { envFileName, envFilePath } from "../common/Arguments";
 import { buildRootDir } from "../common/TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";

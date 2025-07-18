@@ -1,19 +1,19 @@
 import { ChildProcess, fork } from "node:child_process";
-import path from "node:path";
+// import path from "node:path";
 
-import { ROOT_PATH } from "@hexagonal/utils/constant";
-import { PackageModel } from '@hexagonal/utils/cli';
-import Logger from "@hexagonal/utils/logger";
+// import { ROOT_PATH } from "@hexagonal/utils/constant";
+// import { PackageModel } from '@hexagonal/utils/cli';
+// import Logger from "@hexagonal/utils/logger";
 
 // import { BANNER_MODE, CLI_PACKAGE_PATH, INHERITED_ARGV, LIBRARY_NAME } from "../constant";
-import { readJsonFile } from "../../util/File";
+// import { readJsonFile } from "../../util/File";
 
 // import { envFileData } from "./Environment";
-import { displayBanner } from "./Banner";
-import { targetAppPath } from "../common/Arguments";
+// import { displayBanner } from "./Banner";
+// import { targetAppPath } from "../common/Arguments";
 // import { argvInheritedAddons } from "./Addon";
-import { initIpc } from "./Ipc";
-import { buildOutDir, buildRootDir } from "../common/TypeScriptCompiler";
+// import { initIpc } from "./Ipc";
+// import { buildOutDir, buildRootDir } from "../common/TypeScriptCompiler";
 
 
 // const log = new Logger('Launcher', LIBRARY_NAME);
@@ -31,13 +31,13 @@ export const relaunch = () => {
  * TODO: mostrar el PID del proceso lanzado por el logger
  */
 export const launch = (reload: boolean = false) => {
-    let appPath = path.join(ROOT_PATH, buildOutDir);
-    const mainPath = targetAppPath.replace('.ts', '.js');
-    mainPath.split('/').forEach((item) => {
-        if (item !== '.' && !buildRootDir.includes(item)) {
-            appPath = path.join(appPath, item);
-        }
-    });
+    // let appPath = path.join(ROOT_PATH, buildOutDir);
+    // const mainPath = targetAppPath.replace('.ts', '.js');
+    // mainPath.split('/').forEach((item) => {
+    //     if (item !== '.' && !buildRootDir.includes(item)) {
+    //         appPath = path.join(appPath, item);
+    //     }
+    // });
 
     // Los ARGV heredados del cli al TargetApp
     // const rootProcessExecArgv: string[] = [];

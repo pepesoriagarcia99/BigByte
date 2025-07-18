@@ -1,13 +1,16 @@
-// import { readFileSync } from "node:fs";
-// import Logger from "@hexagonal/utils/logger";
+import { readFileSync } from "node:fs";
+import Logger from "@hexagonal/utils/logger";
+import { FlagData } from "@hexagonal/utils/lib/model/integration";
 
-// import { DuplicatePropertyError } from "../exception";
+import { DuplicatePropertyError } from "../../exception";
+import { LIBRARY_NAME } from "../../constant";
+
 
 // import { envFilePath } from "./Arguments";
 // import { DEFAULT_ENV_VALUES, LIBRARY_NAME } from "../constant";
 // import { addons } from "./Addons";
 
-// const log = new Logger('Environment', LIBRARY_NAME);
+const log = new Logger('Environment', LIBRARY_NAME);
 // export let envFileData: Map<string, string> = new Map(); // variables de entorno del archivo de entorno
 // export let defaultEnvValues: DefaultEnvValue[] = [];
 
@@ -82,23 +85,14 @@
 //   });
 // }
 
-// const log = new Logger('Environment', LIBRARY_NAME);
-// let defaultEnvironmentData: Map<string, string> = new Map();
-// let argvEnvironmentData: Map<string, string> = new Map();
-// export let environmentData: Map<string, string> = new Map(); // variables de entorno del archivo de entorno
+export const readEnvironments = (defaultValues: Map<string, string>, envFlag: FlagData | undefined): Map<string, string> => {
+    console.log("🚀 ~ readEnvironments ~ envFlag:", envFlag)
+    console.log("🚀 ~ readEnvironments ~ defaultValues:", defaultValues)
+    
+    /**
+     * ! mostrar una alerta de cuando se esta metiendo un valor por flag y por .env a la vez
+     * * Siempre pesa mas el flag
+     */
 
-// export const setDefaultEnv = () => {
-
-// }
-
-// export const setArgvEnv = (argv: string[]) => {
-
-// }
-
-// export const setEnv = (key: string, value: string) => {
-
-// }
-
-export const readEnvironments = (defaultValues: Map<string, string>): Map<string, string> => {
-
+    return new Map<string, string>();
 }
