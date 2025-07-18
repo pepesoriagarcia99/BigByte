@@ -8,7 +8,7 @@ import { LIBRARY_NAME } from "../../constant";
 import { readAddons } from "../common/Addon";
 import { relaunch } from "./RunLauncher";
 // import { envFileName, envFilePath } from "../common/Arguments";
-import { buildRootDir } from "../common/TypeScriptCompiler";
+import { buildRootDir } from "./TypeScriptCompiler";
 // import { readEnvironment, setDefaultEnvironmentValues } from "./Environment";
 
 

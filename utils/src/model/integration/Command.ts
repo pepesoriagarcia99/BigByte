@@ -22,4 +22,4 @@ export type Command =
 // declaracion de comandos para nuevos flags
 CommandBase | 
 // declaracion de nuevos comandos
-CommandBase & { path: string } & HelpBase;
+CommandBase & { path: string, requiresMainFile?: boolean, } & HelpBase;

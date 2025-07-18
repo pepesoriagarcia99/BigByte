@@ -28,6 +28,7 @@ export default {
         {
             name: ARGV_FLAG_VERSION,
             path: path.join(__dirname, '../command/Version.ts'),
+            requireMainFile: false,
             description: 'Displays the current version of the CLI.',
             detail: 'Displays the current version of the CLI. This command is useful to check if you are using the latest version of the CLI or to report issues with a specific version.',
             flags: '-',
@@ -35,6 +36,7 @@ export default {
         {
             name: ARGV_FLAG_VERSION_SHORT,
             path: path.join(__dirname, '../command/Version.ts'),
+            requireMainFile: false,
             description: 'Displays the current version of the CLI.',
             detail: 'Displays the current version of the CLI. This command is useful to check if you are using the latest version of the CLI or to report issues with a specific version.',
             flags: '-',
@@ -42,6 +44,7 @@ export default {
         {
             name: ARGV_COMMAND_HELP,
             path: path.join(__dirname, '../command/Help.ts'),
+            requireMainFile: false,
             description: 'Displays the help information for the CLI commands.',
             detail: 'Displays the help information for the CLI commands. This command is useful to understand how to use the CLI and its available commands and flags.',
             flags: '*',
@@ -49,6 +52,7 @@ export default {
         {
             name: ARGV_COMMAND_RUN,
             path: path.join(__dirname, '../command/Run.ts'),
+            requireMainFile: true,
             description: 'Runs the application with the specified configuration.',
             detail: 'Runs the application with the specified configuration. This command is useful to start the application in development mode or production mode, depending on the environment configuration.',
             flags: [

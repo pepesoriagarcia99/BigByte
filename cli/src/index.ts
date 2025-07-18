@@ -14,6 +14,7 @@ import { readEnvironments } from "./service/common/Environment";
 import { launch } from "./service/common/CommandLauncher";
 import { getDependencies } from "./service/common/Package";
 import { ARGV_FLAG_ENV } from "./constant/argv";
+import { MainFile } from "./model/MainFile";
 
 const dependencies: Dependency[] = getDependencies();
 const addons: Addon[] = readAddons(dependencies);
@@ -34,7 +35,10 @@ if (!command) {
 
 argv.shift(); // Remove the action from argv
 
-const mainFile = getMainFile(argv);
+let mainFile: MainFile | undefined;
+if ('requiresMainFile' in command && command.requiresMainFile === true) {
+    mainFile = getMainFile(argv);
+}
 
 console.log(argv);
 console.log(command);
@@ -46,4 +50,4 @@ const envDefaultValues: Map<string, string> = getEnvDefaultValue();
 const envFileArgv: FlagData | undefined = flagsData.find(flagData => flagData.flag.name === ARGV_FLAG_ENV);
 const environmentValues: Map<string, string> = readEnvironments(envDefaultValues, envFileArgv);
 
-launch(command, flagsData, environmentValues);
+launch(mainFile, command, flagsData, environmentValues);

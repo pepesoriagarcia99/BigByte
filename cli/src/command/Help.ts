@@ -1,28 +1,8 @@
-// import { LIBRARY_ORGANIZATION_NAME } from "@hexagonal/utils/constant";
-// import { ARGV_COMMAND_HELP, ARGV_COMMAND_PACKAGE, ARGV_COMMAND_RUN, ARGV_FLAG_DEBUG, ARGV_FLAG_DOCTOR, ARGV_FLAG_ENV, ARGV_FLAG_MINIFY, ARGV_FLAG_VERSION, ARGV_FLAG_VERSION_SHORT, ARGV_FLAG_WATCH, LIBRARY_NAME } from "../constant";
-// import { flags } from "../service/Arguments";
-
-// const detail = {
-//     /** Comando run */
-//     [ARGV_COMMAND_RUN]: 'a',
-//     [ARGV_FLAG_DOCTOR]: 'a',
-//     [ARGV_FLAG_WATCH]: 'a',
-//     [ARGV_FLAG_DEBUG]: 'a',
-//     [ARGV_FLAG_ENV]: 'a',
-
-//     /** Comando package */
-//     [ARGV_COMMAND_PACKAGE]: 'a',
-//     [ARGV_FLAG_MINIFY]: 'a',
-
-//     /** Comando help */
-//     [ARGV_COMMAND_HELP]: 'a',
-
-//     /** Comando version */
-//     [ARGV_FLAG_VERSION]: 'a',
-//     [ARGV_FLAG_VERSION_SHORT]: 'a',
-// }
-
 export default () => {
+    console.log('This is the help for using the CLI');
+    
+
+
     // const detailFlag = flags[0];
     // if(detailFlag) {
     //     const detailDescription = detail[detailFlag as keyof typeof detail];
