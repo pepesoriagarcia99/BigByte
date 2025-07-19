@@ -5,10 +5,7 @@ import Logger from "@hexagonal/utils/logger";
 import { ROOT_PATH, LIBRARY_ORGANIZATION_NAME } from "@hexagonal/utils/constant";
 
 import { INTEGRATION_CONFIGURATION_PATH, LIBRARY_NAME } from "../../constant";
-
-import { Addon } from "../../model/Addon";
-import { Configuration } from "@hexagonal/utils/integration";
-import { Dependency } from "../../model/Dependency";
+import { Addon, Configuration, Dependency } from "@hexagonal/utils/integration";
 
 
 const log = new Logger('Addon', LIBRARY_NAME);

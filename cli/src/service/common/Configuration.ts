@@ -1,9 +1,8 @@
 import Logger from "@hexagonal/utils/logger";
-import { Command, Configuration, Environment, Flag, FlagType } from "@hexagonal/utils/integration";
+import { Addon, Command, Configuration, Environment, Flag, FlagType } from "@hexagonal/utils/integration";
 
 import { LIBRARY_NAME } from "../../constant";
 import { ConfigurationError } from "../../exception/ConfigurationError";
-import { Addon } from "../../model/Addon";
 
 
 const log = new Logger('Configuration', LIBRARY_NAME);

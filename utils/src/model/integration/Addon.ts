@@ -1,4 +1,4 @@
-import { Configuration } from "@hexagonal/utils/integration";
+import { Configuration } from "./Configuration";
 
 export interface Addon {
     name: string;

@@ -1,24 +1,14 @@
 import Logger from "@hexagonal/utils/logger";
+import { CommandData } from "@hexagonal/utils/integration";
 
-// import { ARGV_FLAG_DEBUG, ARGV_FLAG_DOCTOR, ARGV_FLAG_WATCH, LIBRARY_NAME } from "../constant";
-
-import { initChangeDetector, watcherProcess } from "../service/run/Watcher";
-// import { getActiveFlag } from "../service/Arguments";
-// import { compileTypeScript, readTsConfig } from "../service/TypeScriptCompiler";
-// import { readEnvironment, setDefaultEnvironmentValues } from "../service/Environment";
-import { launch } from "../service/run/RunLauncher";
-// import { readTargetPackageJson } from "../service/common/Package";
-import { doctorServerProcess, initDoctorServer } from "../service/run/Doctor";
-import { CompilationError, CompilationErrorData } from "../exception/CompilationError";
 import { ARGV_COMMAND_RUN } from "../constant/argv";
-import { MainFile } from "../model/MainFile";
-import { Command, FlagData } from "@hexagonal/utils/lib/model/integration";
+import { LIBRARY_NAME } from "../constant";
 
-// const log = new Logger(ARGV_COMMAND_RUN, LIBRARY_NAME);
+const log = new Logger(ARGV_COMMAND_RUN, LIBRARY_NAME);
 
-export default async (mainFile: MainFile | undefined, command: Command, flagsData: FlagData[], environmentValues: Map<string, string>) => {
+export default async (commandData: CommandData) => {
     const init = performance.now();
-    console.log("🚀 ~ Run command started");
+    console.log("🚀 ~ Run command started: ", commandData);
 
     // const debugIsActive = getActiveFlag(ARGV_FLAG_DEBUG) !== -1;
     // const watchIsActive = getActiveFlag(ARGV_FLAG_WATCH) !== -1;

@@ -1,9 +1,9 @@
 import { PackageModel, PackageModelLock, PackageModelLockDependency } from '@hexagonal/utils/cli';
 import { LIBRARY_ORGANIZATION_NAME, ROOT_PATH } from "@hexagonal/utils/constant";
+import { Dependency } from '@hexagonal/utils/integration';
 
 import { MissingConfigurationError } from "../../exception";
 import { readJsonFile } from "../../util/File";
-import { Dependency } from '../../model/Dependency';
 
 let packageJson: PackageModel;
 let packageJsonLock: PackageModelLock;

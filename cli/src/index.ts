@@ -1,19 +1,16 @@
 #!/usr/bin/env node
 
-import { Command, FlagData } from "@hexagonal/utils/lib/model/integration";
+import { Addon, Command, CommandData, Dependency, FlagData, MainFile } from "@hexagonal/utils/integration";
 
 import { BIN_NAME } from "./constant";
 import { MissingArgumentError } from "./exception";
 
-import { Addon } from "./model/Addon";
-import { Dependency } from "./model/Dependency";
 import { readAddons } from "./service/common/Addon"
 import { getMainFile, readArguments } from "./service/common/Arguments";
 import { getCommand, getEnvDefaultValue, readConfigurations } from "./service/common/Configuration";
 import { readEnvironments } from "./service/common/Environment";
 import { launch } from "./service/common/CommandLauncher";
 import { getDependencies } from "./service/common/Package";
-import { MainFile } from "./model/MainFile";
 
 const dependencies: Dependency[] = getDependencies();
 const addons: Addon[] = readAddons(dependencies);
@@ -44,10 +41,6 @@ const envDefaultValues: Map<string, string> = getEnvDefaultValue();
 
 const environmentValues: Map<string, string> = readEnvironments(envDefaultValues, flagsData);
 
-/**
- * TODO: crear un modelo de datos que sea el input de las funciones lanzadas del comando
- * Tiene que estar en utils para que los addons puedan usarlo
- */
 launch({
     mainFile,
     command,
@@ -56,4 +49,4 @@ launch({
     envDefaultValues,
     dependencies,
     addons
-});
+} as CommandData);

@@ -4,7 +4,6 @@ import path from "node:path";
 import Logger from "@hexagonal/utils/logger";
 import { FlagData } from "@hexagonal/utils/lib/model/integration";
 
-import { DuplicatePropertyError } from "../../exception";
 import { DEFAULT_ENV_FILE_PATH, LIBRARY_NAME } from "../../constant";
 import { ARGV_FLAG_ENV } from "../../constant/argv";
 import { ROOT_PATH } from "@hexagonal/utils/constant";

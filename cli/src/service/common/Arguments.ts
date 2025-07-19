@@ -1,13 +1,12 @@
 import path from "node:path";
 import { existsSync } from "node:fs";
-import { Command, Flag, FlagType, FlagData } from "@hexagonal/utils/integration";
+import { Command, Flag, FlagType, FlagData, MainFile } from "@hexagonal/utils/integration";
 import { ROOT_PATH } from "@hexagonal/utils/constant";
 
 import { MissingArgumentError } from "../../exception/MissingArgumentError";
 
 import { BIN_NAME } from "../../constant";
 import { MissingFileError } from "../../exception";
-import { MainFile } from "../../model/MainFile";
 
 /**
  * Configura y valida el path del archivo a ejecutar
