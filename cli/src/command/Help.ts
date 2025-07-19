@@ -1,5 +1,5 @@
 export default () => {
-    console.log('This is the help for using the CLI');
+    console.log('This is the help for using the CLI', process.argv.slice(2));
     
 
 

@@ -13,7 +13,6 @@ import { getCommand, getEnvDefaultValue, readConfigurations } from "./service/co
 import { readEnvironments } from "./service/common/Environment";
 import { launch } from "./service/common/CommandLauncher";
 import { getDependencies } from "./service/common/Package";
-import { ARGV_FLAG_ENV } from "./constant/argv";
 import { MainFile } from "./model/MainFile";
 
 const dependencies: Dependency[] = getDependencies();
@@ -40,14 +39,21 @@ if ('requiresMainFile' in command && command.requiresMainFile === true) {
     mainFile = getMainFile(argv);
 }
 
-console.log(argv);
-console.log(command);
-console.log(mainFile);
-
 const flagsData: FlagData[] = readArguments(command, argv);
 const envDefaultValues: Map<string, string> = getEnvDefaultValue();
 
-const envFileArgv: FlagData | undefined = flagsData.find(flagData => flagData.flag.name === ARGV_FLAG_ENV);
-const environmentValues: Map<string, string> = readEnvironments(envDefaultValues, envFileArgv);
+const environmentValues: Map<string, string> = readEnvironments(envDefaultValues, flagsData);
 
-launch(mainFile, command, flagsData, environmentValues);
+/**
+ * TODO: crear un modelo de datos que sea el input de las funciones lanzadas del comando
+ * Tiene que estar en utils para que los addons puedan usarlo
+ */
+launch({
+    mainFile,
+    command,
+    flagsData,
+    environmentValues,
+    envDefaultValues,
+    dependencies,
+    addons
+});

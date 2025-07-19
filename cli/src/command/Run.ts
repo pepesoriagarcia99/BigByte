@@ -11,11 +11,14 @@ import { launch } from "../service/run/RunLauncher";
 import { doctorServerProcess, initDoctorServer } from "../service/run/Doctor";
 import { CompilationError, CompilationErrorData } from "../exception/CompilationError";
 import { ARGV_COMMAND_RUN } from "../constant/argv";
+import { MainFile } from "../model/MainFile";
+import { Command, FlagData } from "@hexagonal/utils/lib/model/integration";
 
 // const log = new Logger(ARGV_COMMAND_RUN, LIBRARY_NAME);
 
-export default async () => {
-    // const init = performance.now();
+export default async (mainFile: MainFile | undefined, command: Command, flagsData: FlagData[], environmentValues: Map<string, string>) => {
+    const init = performance.now();
+    console.log("🚀 ~ Run command started");
 
     // const debugIsActive = getActiveFlag(ARGV_FLAG_DEBUG) !== -1;
     // const watchIsActive = getActiveFlag(ARGV_FLAG_WATCH) !== -1;

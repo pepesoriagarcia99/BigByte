@@ -37,15 +37,21 @@ export const readArguments = (command: Command, argv: string[]): FlagData[] => {
              * Para el caso de '*' no se hara nada
              * * No se cargaran valores ni configuraciones, sera la accion la que se encargue de ello
              */
-            if (command.flags !== '-') {
+            if (command.flags === '-' && argv.length > 0) {
                 throw new MissingArgumentError('flags', `The command "${command.name}" does not accept any flags.`);
             }
         } else if (Array.isArray(command.flags)) {
             argv.forEach((argument) => {
                 const flags: Flag[] = command.flags as Flag[]
-                const flag = flags.find(f => f.name === argument);
+                const flag = flags.find(f => argument.includes(f.name));
 
                 if (!flag) {
+                    throw new MissingArgumentError('flags', `The flag "${argument}" is not valid for the command "${command.name}". Use "${BIN_NAME} help ${command.name}" for instructions.`);
+                }
+
+                if ((flag?.type === FlagType.file || flag?.type === FlagType.value) && !argument.includes('=')) {
+                    throw new MissingArgumentError('flags', `The flag "${argument}" is not valid for the command "${command.name}". Use "${BIN_NAME} help ${command.name}" for instructions.`);
+                } else if (flag?.type === FlagType.switch && argument !== flag.name) {
                     throw new MissingArgumentError('flags', `The flag "${argument}" is not valid for the command "${command.name}". Use "${BIN_NAME} help ${command.name}" for instructions.`);
                 }
 
